@@ -1,0 +1,165 @@
+\documentclass[a4paper]{article}
+\usepackage[affil-it]{authblk}
+\usepackage[backend=bibtex,style=numeric]{biblatex}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{ctex}
+\usepackage{epstopdf}
+\usepackage{amsmath}
+\usepackage{amsfonts,amssymb}
+\usepackage{tikz}
+\usetikzlibrary{chains}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{float}
+\usepackage{hyperref}
+
+\usepackage{geometry}
+\geometry{margin=1.5cm, vmargin={0pt,1cm}}
+\setlength{\topmargin}{-1cm}
+\setlength{\paperheight}{29.7cm}
+\setlength{\textheight}{25.3cm}
+
+\addbibresource{citation.bib}
+
+\begin{document}
+% =================================================
+\title{Numerical Analysis homework \#1}
+
+\author{陈澎 3220103443
+  \thanks{Electronic address: \texttt{cpzju@zju.edu.cn}}}
+\affil{信息与计算科学, 信计2201, Zhejiang University }
+
+
+\date{\today}
+
+\maketitle
+
+% ============================================
+\section*{I.}
+
+\subsection*{I-a}
+The width of interval at the nth step is $2^{1-n}$.
+
+\subsection*{I-b}
+The supremum of the distance between the root r and the midpoint of the interval is $2^{-n}$.
+
+
+\section*{II.}
+
+
+denote $h_{n}=b_{n}-a_{n}\ (n=0,1,2,3,\cdots)$, where $[a_{n},b_{n}]$ is the interval of nth step. 
+Let $c_n$ be the midpoint of $[a_{n},b_{n}]$ and let p be zero point. Then
+$$
+\begin{aligned}
+  h_{n}&=2^{-(n+1)}h_{0} \\
+  \frac{\lvert c_{n}-p \rvert}{p} &\leq \frac{h_{n}}{a_{0}} \leq \epsilon \\
+  i.e.\quad 2^{n+1} &\geq \frac{b_{0}-a_{0}}{a_{0}\epsilon} \\
+  i.e.\quad n &\geq \frac{\log(b_{0}-a_{0})-\log\epsilon-\log a_{0}}{\log2}-1 
+\end{aligned}
+$$
+
+\section*{III.}
+\begin{table}[!ht]
+  \centering
+  \begin{tabular}{|c|c|c|c|c|c|}
+  \hline
+      ~ & $x_{0}$ & $x_{1}$ & $x_{2}$ & $x_{3}$ & $x_{4}$ \\ \hline
+      $x$ & -1 & -0.8125 & -0.770804 & -0.768832 & -0.768828 \\ \hline
+      $p(x)$ & -3 & -0.46582 & -0.0201379 & -4.37084e-005 & -2.07412e-010 \\ \hline
+  \end{tabular}
+\end{table}
+
+\section*{IV.}
+$$
+\begin{aligned}
+  0=f(p)&=f(x_{n}-e_{n}) \\
+  &=f(x_{n})-e_{n}f'(\xi_{n}),\  \text{where $\xi_{n}$ is between $p$ and $x_{n}$} \\
+  e_{n+1}&=(1-\frac{f'(\xi_{n})}{f'(x_{0})})e_{n}
+\end{aligned}
+$$
+so $s=1$, $c=1-\frac{f'(\xi_{n})}{f'(x_{0})}$.
+
+\section*{V.}
+Let $g(x)=\arctan x$, $x\in (-\frac{\pi}{2},\frac{\pi}{2})$. Then
+$$g'(x)=\frac{1}{x^{2}+1}\leq 1$$
+$g'(x)= 1$, iff $x=0$.
+
+since $g(x)\in \mathcal{C}^1$ and $g:(-\frac{\pi}{2},\frac{\pi}{2})\rightarrow(-\frac{\pi}{2},\frac{\pi}{2})$,
+
+thus it converges as $$\lim_{n\rightarrow \infty} x_{n}=0$$.
+
+
+\section*{VI.}
+Let $g(x)=\frac{1}{p+x}$, $x\in(0,1)$, then
+$$x_{n+1}=g(x_{n})$$
+where $x_{1}=1/p$.
+
+Because $p>1$,
+so $0< x_{n} < 1$.
+
+$$\lvert g'(x) \rvert=\frac{1}{(x+p)^{2}}<1$$
+
+since $g(x)\in \mathcal{C}^1$ and $g:(0,1)\rightarrow(0,1)$,
+thus it converges.
+
+Let $g(x)=x$, we get $$\lim_{n\rightarrow\infty} x_{n}= x=\frac{-p+\sqrt{p^{2}+4}}{2}$$
+
+
+\section*{VII.}
+The problem is the zero point can be negative which changes the equality so that we cannot measure $n$ correctly.
+
+Actually, we can use absolute error instead of relative error to measure it appropriately.
+
+Denote $h_{n}=b_{n}-a_{n}\ (n=0,1,2,3,\cdots)$, where $[a_{n},b_{n}]$ is the interval of nth step. 
+Let $c_n$ be the midpoint of $[a_{n},b_{n}]$ and let p be zero point. Then
+$$
+\begin{aligned}
+  h_{n}&=2^{-(n+1)}h_{0} \\
+  \lvert c_{n}-p \rvert &\leq h_{n} \leq \epsilon \\
+  i.e.\quad 2^{n+1} &\geq \frac{b_{0}-a_{0}}{\epsilon} \\
+  i.e.\quad n &\geq \frac{\log(b_{0}-a_{0})-\log\epsilon}{\log2}-1 
+\end{aligned}
+$$
+
+\section*{VIII.}
+\subsection*{VIII-a}
+Let $p$ be the zero of multiplicity k of the function f, we can denote $f(x)=(x-p)^{k}q(x)$, and $g(x)=x-\frac{f(x)}{f'(x)}$.
+
+So the iteration can be expressed as $x_{n+1}=g(x_{n})$.
+
+$$
+\begin{aligned}
+g'(x)
+&= 1-\frac{f'(x)^2-f(x)f''(x)}{(f'(x))^2} \\
+&= \frac{f(x)f''(x)}{(f'(x))^2} \\
+&= \frac{(x-p)^{k}q(x)(k(k-1)(x-p)^{k-2}q(x)+2k(x-p)^{k-1}q'(x)+q''(x)(x-p)^k)}{(k(x-p)^{k-1}q(x)+q'(x)(x-p)^k)^2} \\
+&= \frac{(x-p)^{2k-2}q(x)(k(k-1)q(x)+2k(x-p)q'(x)+q''(x)(x-p)^2)}{(x-p)^{2k-2}(kq(x)+q'(x)(x-p))^2} \\
+&= \frac{q(x)(k(k-1)q(x)+2k(x-p)q'(x)+q''(x)(x-p)^2)}{(kq(x)+q'(x)(x-p))^2} 
+\end{aligned}
+$$
+
+since $g'(p)=1-\frac{1}{k}<1$,
+it converges linearly as\cite{NA}
+$$\lim_{n\rightarrow\infty} \frac{\lvert x_{n+1}-p \rvert}{\lvert x_{n}-p \rvert}=\lvert g'(p) \rvert$$
+
+\subsection*{VIII-b}
+Let $p$ be the zero of multiplicity k of the function f, we can denote $f(x)=(x-p)^{k}q(x)$, and $g(x)=x-k\frac{f(x)}{f'(x)}$.
+
+So the iteration can be expressed as $x_{n+1}=g(x_{n})$.
+
+$$
+\begin{aligned}
+g'(x)
+&= 1-k\frac{f'(x)^2-f(x)f''(x)}{(f'(x))^2} \\
+&= 1-k+k\frac{(x-p)^{k}q(x)(k(k-1)(x-p)^{k-2}q(x)+2k(x-p)^{k-1}q'(x)+q''(x)(x-p)^k)}{(k(x-p)^{k-1}q(x)+q'(x)(x-p)^k)^2} \\
+&= 1-k+k\frac{q(x)(k(k-1)q(x)+2k(x-p)q'(x)+q''(x)(x-p)^2)}{(kq(x)+q'(x)(x-p))^2}
+\end{aligned}
+$$
+
+since $g'(p)=0$,
+it converges quadratically as\cite{NA}
+$$\lim_{n\rightarrow\infty} \frac{\lvert x_{n+1}-p \rvert}{\lvert x_{n}-p \rvert ^2}= \frac{\lvert g''(p) \rvert}{2} $$
+
+\printbibliography
+
+\end{document}
