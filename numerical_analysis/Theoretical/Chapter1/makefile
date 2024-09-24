@@ -2,11 +2,11 @@
 OBJ = $(wildcard *.tex)
 
 doc: ${OBJ}
-	@pdflatex $^
+	@xelatex $^
 	@bibtex main.aux
-	@pdflatex $^
-	@pdflatex $^
+	@xelatex $^
+	@xelatex $^
 
 .PHONY:clean
 clean:
-	rm -f *.aux *.log *.out *.synctex.gz  *.toc *.bbl *.run.xml *.blg
+	rm -f *.aux *.log *.out *.synctex.gz  *.toc *.bbl *.run.xml *.blg *-blx.bib
