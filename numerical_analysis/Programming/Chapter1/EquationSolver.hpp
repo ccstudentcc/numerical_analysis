@@ -7,71 +7,116 @@
 
 class EquationSolver {
 protected:
-    const Function & F;
+    const Function & F; // Reference to a Function object
 public:
-    EquationSolver(const Function& F) : F(F) {}
-    virtual double solve() = 0;
+    EquationSolver(const Function& F) : F(F) {} // Constructor initializes the function reference
+    virtual double solve() = 0; // Pure virtual method for solving the equation
 };
+
+// Symbolic function
+template <typename T>
+int sgn(T val) {
+    return (T(0) < val) - (val < T(0));
+}
 
 class Bisection_Method : public EquationSolver {
 private:
-    double a, b;
-    double eps, delta;
-    int Maxiter;
+    double a, b; // Interval endpoints
+    double eps, delta; // Precision parameters
+    int Maxiter; // Maximum iterations
 public:
     Bisection_Method(const Function &F, double a, double b, 
-        double eps = 1e-7, double delta = 1e-6, int Maxiter = 50) :
+        double eps = 1e-9, double delta = 1e-9, int Maxiter = 100) :
         EquationSolver(F), a(a), b(b), eps(eps), delta(delta), Maxiter(Maxiter) {}
     
     virtual double solve() override {
+        // Check if the function has different signs at the endpoints
         if (F(a) * F(b) >= 0) {
-            throw std::invalid_argument("函数在区间端点的值必须有不同符号");
+            throw std::invalid_argument("Function values at the endpoints must have opposite signs");
         }
         
-        double c;
-        for (int iter = 0; iter < Maxiter; ++iter) {
-            c = (a + b) / 2.0; // 中点
-            if (F(c) == 0.0 || (b - a) / 2.0 < eps) {
-                return c; // 找到根或达到精度
+        double c, u, w, a0, h;
+        a0 = a;
+        u = sgn(F(a));
+        h = b - a;
+
+        for (int iter = 0; iter <= Maxiter; ++iter) {
+            h = h / 2.0;
+            c = a0 + h; // Calculate midpoint
+            if(h < delta || iter == Maxiter-1){
+                break;
             }
-            
-            if (F(c) * F(a) < 0) {
-                b = c; // 根在左侧
-            } else {
-                a = c; // 根在右侧
+            w = F(c);
+
+            if (fabs(w) < eps) {
+                break; // Found root or reached desired precision
+            }
+            else if (sgn(w) == u) {
+                a0 = c; // Root is in the right half
             }
         }
-        return c; // 返回最后的中点
+
+        return c; // Return the last midpoint
     }
 };
 
 class Newton_Method : public EquationSolver {
 private:
-    double x0;
-    double eps;
-    int Maxiter;
+    double x0; // Initial guess
+    double eps; // Precision parameter
+    int Maxiter; // Maximum iterations
 public:
     Newton_Method(const Function &F, double x0, 
-        double eps = 1e-7, int Maxiter = 50) :
-        EquationSolver(F), x0(x0), Maxiter(Maxiter), eps(eps) {}
+        double eps = 1e-9, int Maxiter = 100) :
+        EquationSolver(F), x0(x0), eps(eps), Maxiter(Maxiter) {}
     
     virtual double solve() override {
         double x = x0;
         for (int iter = 0; iter < Maxiter; ++iter) {
-            double fx = F(x);
-            double dfx = F.derivative(x); // 假设 F 有导数方法
+            double fx = F(x); // Function value at x
+            if(fabs(fx) < eps){
+                break;
+            }
+            double dfx = F.derivative(x); // Assume F has a derivative method
             if (dfx == 0) {
-                throw std::runtime_error("导数为零，无法继续");
+                throw std::runtime_error("Derivative is zero, cannot proceed");
             }
             
-            double x_new = x - fx / dfx;
-            if (std::abs(x_new - x) < eps) {
-                return x_new; // 找到根或达到精度
-            }
-            x = x_new; // 更新 x
+            x = x - fx / dfx; // Newton's method formula
         }
-        return x; // 返回最后的 x 值
+        return x; // Return the last x value
     }
 };
 
-#endif
+class Secant_Method : public EquationSolver {
+private:
+    double x0, x1; // Initial guess
+    double eps, delta; // Precision parameter
+    int Maxiter; // Maximum iterations
+public:
+    Secant_Method(const Function &F, double x0, double x1,
+        double eps = 1e-9, double delta = 1e-9, int Maxiter = 100) :
+        EquationSolver(F), x0(x0), x1(x1), eps(eps), delta(delta), Maxiter(Maxiter) {}
+    
+    virtual double solve() override {
+        double xb = x1, xa = x0;
+        double u = F(xb), v = F(xa);
+        for (int iter = 2; iter < Maxiter; ++iter) {
+            double s = (xb - xa) / (u - v);
+            xa = xb;
+            v = u;
+            xb = xb - u * s;
+
+            if(fabs(xb - xa) < delta){
+                break;
+            }
+            u = F(xb);
+            if(fabs(u) < eps){
+                break;
+            }
+        }
+        return xb; // Return the last x value
+    }
+};
+
+#endif // EQUATIONSOLVER

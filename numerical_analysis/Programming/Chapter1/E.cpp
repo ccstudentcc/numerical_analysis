@@ -47,27 +47,11 @@ void solve_f3() {
     std::cout << "A root is: " << x << std::endl;
 }
 
-class F4 : public Function {
-public:
-    double operator() (double x) const {
-        return (pow(x, 3) + 4*pow(x, 2) + 3*x + 5)/(2*pow(x, 3) - 9*pow(x, 2) + 18*x - 2);
-    }
-};
-
-void solve_f4() {
-    std::cout << "Solving (x^3+4x^2+3x+5)/(2x^3-9x^2+18-2) on [0, 4]" << std::endl;
-    Bisection_Method solver_f4(F4(), 0, 4);
-    double x = solver_f4.solve();
-    std::cout << "A root is: " << x << std::endl;
-}
-
-
 int main() {
     std::cout << "Problem B" << std::endl;
     solve_f1();
     solve_f2();
     solve_f3();
-    solve_f4();
     
 
     return 0;
