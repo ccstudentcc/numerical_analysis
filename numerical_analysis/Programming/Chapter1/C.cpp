@@ -12,13 +12,13 @@ public:
 };
 
 void solve_f1() {
-    std::cout << "Solving x = \\tan x near 4.5 and 7.7" << std::endl;
+    std::cout << "Solving x = \\tan x near 4.5 and 7.7," << std::endl;
     Newton_Method solver_f1(F1(), 4.5);
     Newton_Method solver_f2(F1(), 7.7);
     double x1 = solver_f1.solve();
     double x2 = solver_f2.solve();
-    std::cout << "A root near 4.5 is: " << x1 << std::endl;
-    std::cout << "A root near 7.7 is: " << x2 << std::endl;
+    std::cout << "A root near 4.5 is: " << x1 << "." << std::endl;
+    std::cout << "A root near 7.7 is: " << x2 << "." << std::endl;
 }
 
 int main() {

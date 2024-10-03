@@ -13,10 +13,10 @@ public:
 };
 
 void solve_f1() {
-    std::cout << "Solving x^{-1} - \\tan x on [0, \\pi/2]" << std::endl;
+    std::cout << "Solving x^{-1} - \\tan x on [0, \\pi/2]," << std::endl;
     Bisection_Method solver_f1(F1(), 0, Pi/2);
     double x = solver_f1.solve();
-    std::cout << "A root is: " << x << std::endl;
+    std::cout << "A root is: " << x << "." << std::endl;
 }
 
 class F2 : public Function {
@@ -27,10 +27,10 @@ public:
 };
 
 void solve_f2() {
-    std::cout << "Solving x^{-1} - 2^x on [0, 1]" << std::endl;
+    std::cout << "Solving x^{-1} - 2^x on [0, 1]," << std::endl;
     Bisection_Method solver_f2(F2(), 0, 1);
     double x = solver_f2.solve();
-    std::cout << "A root is: " << x << std::endl;
+    std::cout << "A root is: " << x << "." << std::endl;
 }
 
 class F3 : public Function {
@@ -41,10 +41,10 @@ public:
 };
 
 void solve_f3() {
-    std::cout << "Solving 2^{-x} - e^x + 2\\cos x - 6 on [1, 3]" << std::endl;
+    std::cout << "Solving 2^{-x} - e^x + 2\\cos x - 6 on [1, 3]," << std::endl;
     Bisection_Method solver_f3(F3(), 1, 3);
     double x = solver_f3.solve();
-    std::cout << "A root is: " << x << std::endl;
+    std::cout << "A root is: " << x << "." << std::endl;
 }
 
 class F4 : public Function {
@@ -55,10 +55,10 @@ public:
 };
 
 void solve_f4() {
-    std::cout << "Solving (x^3+4x^2+3x+5)/(2x^3-9x^2+18-2) on [0, 4]" << std::endl;
+    std::cout << "Solving (x^3+4x^2+3x+5)/(2x^3-9x^2+18-2) on [0, 4]," << std::endl;
     Bisection_Method solver_f4(F4(), 0, 4);
     double x = solver_f4.solve();
-    std::cout << "A root is: " << x << std::endl;
+    std::cout << "A root is: " << x << "." << std::endl;
 }
 
 

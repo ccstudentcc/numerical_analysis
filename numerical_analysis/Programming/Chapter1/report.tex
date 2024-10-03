@@ -28,7 +28,7 @@
 
 \begin{document}
 % =================================================
-\title{Report For}
+\title{NA programming homework \#1}
 
 \author{陈澎 3220103443
   \thanks{Electronic address: \texttt{cpzju@zju.edu.cn}}}
@@ -43,14 +43,65 @@
 \section*{Problem A}
 Function.hpp designs the class "Function" and implements derivative function by using central difference. it also implements the class "polynomial".
 
-EquationSolver.hpp designs an abstract base class "EquationSolver" and its derived class "Bisection_Method" and "Newton_Method".
+EquationSolver.hpp designs an abstract base class "EquationSolver" and its derived class "Bisection\_Method", "Newton\_Method", and "Secant\_Method".
 
 \section*{Problem B}
+Compile and run "B.cpp". \par
+Bisection method:\\
+Solving $x^{-1} - \tan x$ on $[0, \pi/2]$, 
+a root is: 0.860334. \\
+Solving $x^{-1} - 2^x$ on $[0, 1]$, 
+a root is: 0.641186. \\
+Solving $2^{-x} - e^x + 2\cos x - 6$ on $[1, 3]$, 
+a root is: 1.82938. \\
+Solving $(x^3+4x^2+3x+5)/(2x^3-9x^2+18-2)$ on $[0, 4]$, 
+a root is: 0.117877. \\
 
 \section*{Problem C}
+Compile and run 'C.cpp'. \par
+Newton's method:\\
+Solving $x = \tan x$ near 4.5 and 7.7,
+a root near 4.5 is: 4.49341 and a root near 7.7 is: 7.72525.
 
 \section*{Problem D}
+Compile and run 'D.cpp'. \par
+Secant method: \\
+Solving $\sin(x/2)-1$\\
+With initial values 0 and $\pi/2$, the root is: 3.14153. \\
+With initial values $2\pi/3$ and $3\pi/4$, the root is: 3.14152.\\
+Solving $e^x-\tan(x)$\\
+With initial values 1 and 1.4, the root is: 1.30633.\\
+With initial values 1.2 and 1.6, the root is: 1.30633.\\
+Solving $x^3-12x^2+3x+1$\\
+With initial values 0 and -0.5, the root is: -0.188685.\\
+With initial values 0.2 and -0.7, the root is: -0.188685. \par
+The reason why it gets different result in solving $\sin(x/2)-1$ may be that
+the secant method requires two initial estimates. If these values are too far from the actual root or too close together (which
+ can lead to numerical instability), it may converge slowly or even diverge.
 
 \section*{Problem E}
+Compile and run 'E.cpp'. \par
+Solved by Bisection Method, with initial section $[0.1,0.2]$, the depth is: 0.17ft.\par
+Solved by Newton Method, with initial value 0.2, the depth is: 0.17ft.\par
+Solved by Secant Method, with initial values 0.1 and 0.15 the depth is: 0.17ft.\par
+
 
 \section*{Problem F}
+Compile and run 'F.cpp'. \par
+(a) Solved by Newton method,
+with initial value $\pi/6$, the root is: 32.9722°.\par
+(b) Solved by Newton method,
+with initial value 33° but D = 30, the root is: 33.1689°.\par
+(c) Solved by secant method.\\
+With initial value 33° and 90°, The root is: 33.1689°.\\
+With initial value 33° and 150°, The root is: 168.5°.\\
+With initial value 33° and 145°, The root is: 146.831°.\par
+
+The reason why it gets different result may be that
+the secant method requires two initial estimates. If a function has multiple roots, depending on your starting points, 
+the method may converge to different roots. If these initial values are too far from the actual root or too close together (which can lead 
+to numerical instability), it may converge slowly or even diverge.
+If these values are too far from the actual root or too close together (which
+ can lead to numerical instability), it may converge slowly or even diverge. 
+ The secant method may converge to a root very slowly or not at all if the secant lines become nearly horizontal (i.e., the function's derivative is very small). This can happen especially near inflection points or local minima/maxima.
+\end{document}

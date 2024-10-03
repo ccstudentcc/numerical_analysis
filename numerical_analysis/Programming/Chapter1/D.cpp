@@ -18,8 +18,8 @@ void solve_f1() {
     double x1 = solver_f1_1.solve();
     Secant_Method solver_f1_2(F1(), 2*Pi/3, 3*Pi/4);
     double x2 = solver_f1_2.solve();
-    std::cout << "With initial values 0 and \\pi/2, the root is: " << x1 << std::endl;
-    std::cout << "With initial values 2\\pi/3 and 3\\pi/4, the root is: " << x2 << std::endl;
+    std::cout << "With initial values 0 and \\pi/2, the root is: " << x1 << "." << std::endl;
+    std::cout << "With initial values 2\\pi/3 and 3\\pi/4, the root is: " << x2 << "." << std::endl;
 }
 
 class F2 : public Function {
@@ -35,8 +35,8 @@ void solve_f2() {
     double x1 = solver_f2_1.solve();
     Secant_Method solver_f2_2(F2(), 1.2, 1.6);
     double x2 = solver_f2_2.solve();
-    std::cout << "With initial values 1 and 1.4, the root is: " << x1 << std::endl;
-    std::cout << "With initial values 1.2 and 1.6, the root is: " << x2 << std::endl;
+    std::cout << "With initial values 1 and 1.4, the root is: " << x1 << "." << std::endl;
+    std::cout << "With initial values 1.2 and 1.6, the root is: " << x2 << "." << std::endl;
 }
 
 class F3 : public Function {
@@ -52,8 +52,8 @@ void solve_f3() {
     double x1 = solver_f3_1.solve();
     Secant_Method solver_f3_2(F3(), 0.2, -0.7);
     double x2 = solver_f3_2.solve();
-    std::cout << "With initial values 0 and -0.5, the root is: " << x1 << std::endl;
-    std::cout << "With initial values 0.2 and -0.7, the root is: " << x2 << std::endl;
+    std::cout << "With initial values 0 and -0.5, the root is: " << x1 << "." << std::endl;
+    std::cout << "With initial values 0.2 and -0.7, the root is: " << x2 << "." << std::endl;
 }
 
 int main() {
