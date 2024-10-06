@@ -55,7 +55,7 @@ public:
 };
 
 void solve_f4() {
-    std::cout << "Solving (x^3+4x^2+3x+5)/(2x^3-9x^2+18-2) on [0, 4]," << std::endl;
+    std::cout << "Solving (x^3+4x^2+3x+5)/(2x^3-9x^2+18x-2) on [0, 4]," << std::endl;
     Bisection_Method solver_f4(F4(), 0, 4);
     double x = solver_f4.solve();
     std::cout << "A root is: " << x << "." << std::endl;

@@ -11,7 +11,7 @@ public:
 
     // Return the value of the first derivative using central difference
     virtual double derivative(double x) const {
-        const double h = 1e-7; // A small increment
+        const double h = 1e-8; // A small increment
         return ((*this)(x + h) - (*this)(x - h)) / (2 * h); // Central difference formula
     }
 

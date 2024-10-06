@@ -26,7 +26,7 @@ private:
     int Maxiter; // Maximum iterations
 public:
     Bisection_Method(const Function &F, double a, double b, 
-        double eps = 1e-9, double delta = 1e-9, int Maxiter = 100) :
+        double eps = 1e-9, double delta = 1e-9, int Maxiter = 1000) :
         EquationSolver(F), a(a), b(b), eps(eps), delta(delta), Maxiter(Maxiter) {}
     
     virtual double solve() override {
@@ -67,7 +67,7 @@ private:
     int Maxiter; // Maximum iterations
 public:
     Newton_Method(const Function &F, double x0, 
-        double eps = 1e-9, int Maxiter = 100) :
+        double eps = 1e-9, int Maxiter = 1000) :
         EquationSolver(F), x0(x0), eps(eps), Maxiter(Maxiter) {}
     
     virtual double solve() override {
@@ -95,7 +95,7 @@ private:
     int Maxiter; // Maximum iterations
 public:
     Secant_Method(const Function &F, double x0, double x1,
-        double eps = 1e-9, double delta = 1e-9, int Maxiter = 100) :
+        double eps = 1e-9, double delta = 1e-9, int Maxiter = 1000) :
         EquationSolver(F), x0(x0), x1(x1), eps(eps), delta(delta), Maxiter(Maxiter) {}
     
     virtual double solve() override {
