@@ -1,0 +1,522 @@
+\documentclass[a4paper]{article}
+\usepackage[affil-it]{authblk}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{ctex}
+\usepackage{epstopdf}
+\usepackage{amsmath}
+\usepackage{amsfonts,amssymb}
+\usepackage{tikz}
+\usetikzlibrary{chains}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{float}
+\usepackage{hyperref}
+
+\usepackage{geometry}
+\geometry{margin=1.5cm, vmargin={0pt,1cm}}
+\setlength{\topmargin}{-1cm}
+\setlength{\paperheight}{29.7cm}
+\setlength{\textheight}{25.3cm}
+
+
+\begin{document}
+% =================================================
+\title{NA theoretical homework \#2}
+
+\author{陈澎 Chen Peng 3220103443
+  \thanks{Email: \texttt{cpzju@zju.edu.cn}}}
+\affil{Xinji 2201, Zhejiang University }
+
+
+\date{\today}
+
+\maketitle
+
+% ============================================
+\section  *{I.}
+\subsection*{I-a.}
+We have
+$$
+\begin{aligned}
+    p_1(f; x) &= f(1) + (f(2) - f(1)) \frac{x - 1}{2 - 1}   \\
+    &= 1 + (\frac{1}{2} - 1) \frac{x - 1}{2 - 1}    \\
+    &= -\frac{1}{2}x + \frac{3}{2}, \ x\in(1,2)
+\end{aligned}
+$$
+and $f''(\xi(x)) = \dfrac{2}{(\xi(x))^3}$. After substituting, we have
+$$
+\begin{aligned}
+    \frac{1}{x} - (-\frac{1}{2}x + \frac{3}{2}) &=\frac{1}{\xi(x)^3} (x - 1) (x - 2),    \\
+\end{aligned}
+$$
+which induces that $\xi(x)=(2x)^{\frac{1}{3}},\  x\in(1,2).$
+
+\subsection*{I-b.}
+According to the result in question I-a, we extend the domain of $\xi(x)$ from $(1,2)$ to $[1,2]$ and have
+$$
+  \xi(x)=(2x)^{\frac{1}{3}},\  x\in[1,2].
+$$ 
+Since $\xi(x)$ is increasing in $[1, 2]$, it is clear that $$\max_{x \in [1, 2]}\xi(x)=\xi(2)=2^\frac{2}{3}$$ and $$\min_{x \in [1, 2]}\xi(x)=\xi(1)=2^\frac{1}{3}.$$
+
+$f''(\xi(x)) = \frac{2}{(\xi(x))^3} = \frac{1}{x}$ is decreasing in $[1, 2]$, so
+
+$$
+\max_{x \in [1, 2]} f''(\xi(x)) = f''(\xi(1)) = 1.
+$$
+
+
+\section*{II.}
+Set
+$$
+L_{i} = \left[\prod_{\substack{ 0 \leq j \leq n \\ j \neq i}} \frac{x-x_j}{x_i-x_j} \right]^2, \forall i = 0, 1, \dots, n.
+$$
+
+It is clear that $\forall i, j = 0, 1,\dots, n,\ i \not = j,\ L_{i}(x_i) = 1,\ L_{i}(x_j) = 0,$ and $L_{i} \in \mathbb{P}^{+}_{2n}$.
+
+So 
+$$
+p(x) = \sum_{i=0}^{n} f(x_i) L_{i}(x)
+$$ 
+is the polynomial we want.
+
+\section*{III.}
+
+\subsection*{III-a.}
+Prove by induction.
+
+For $n = 0$, we have
+$$
+  f[t] = e^t,
+$$
+which satisfies the formula since $\frac{(e - 1)^0}{0!} e^t = e^t$.
+
+Assume the formula holds for $n = k$, i.e.,
+$$
+  f[t, t + 1, \ldots, t + k] = \frac{(e - 1)^k}{k!} e^t.
+$$
+
+We need to show it holds for $n = k + 1$.
+
+By the definition of divided differences, we have
+$$
+  f[t, t + 1, \ldots, t + k, t + k + 1] = \frac{f[t + 1, t + 2, \ldots, t + k + 1] - f[t, t + 1, \ldots, t + k]}{(t + k + 1) - t}.
+$$
+
+Using the inductive hypothesis, we get
+$$
+  f[t + 1, t + 2, \ldots, t + k + 1] = \frac{(e - 1)^k}{k!} e^{t + 1},
+$$
+and
+$$
+  f[t, t + 1, \ldots, t + k] = \frac{(e - 1)^k}{k!} e^t.
+$$
+
+After substituting, we have
+$$\begin{aligned}
+  f[t, t + 1, \ldots, t + k, t + k + 1] &= \dfrac{\dfrac{(e - 1)^k}{k!} e^{t + 1} - \dfrac{(e - 1)^k}{k!} e^t}{k + 1}\\
+  &= \frac{(e - 1)^{k + 1}}{(k + 1)!} e^t.
+\end{aligned}
+$$
+
+Thus, the formula holds for $n = k + 1$. By induction, the formula is true for all $n \in \mathbb{N}$.
+
+\subsection*{III-b.}
+From Corollary 2.22, we have
+$$
+\exists \xi\in(0,n)\ \text{s.t.}\  f[0, 1, \ldots, n] = \frac{1}{n!} f^{(n)}(\xi).
+$$
+
+Because $f^{(n)}(x) = e^x$, we have
+$$
+  f[0, 1, \ldots, n] = \frac{1}{n!} e^\xi.
+$$
+
+From III-a, we have:
+$$
+  f[0, 1, \ldots, n] = \frac{(e - 1)^n}{n!}.
+$$
+
+After substituting, we have
+$$
+  \frac{(e - 1)^n}{n!} = \frac{1}{n!} e^\xi,
+$$
+which induces that
+$$
+ \xi = n \ln(e - 1).
+$$
+
+Since 
+$$
+\begin{aligned}
+  \dfrac{\xi}{\frac{n}{2}} &= 2 \ln(e-1) \\
+  &= \ln(e - 1)^2 \\
+  &> \ln 1.7^2 \\
+  &= \ln 2.89 \\
+  &> 1,
+\end{aligned}
+$$
+it induces that $\xi > \frac{n}{2}$.
+   
+Therefore, $\xi$ is located to the right of the midpoint $n/2$.
+
+
+\section*{IV.}
+
+\subsection*{IV-a.}
+Calculate the table of divided differences:
+
+\begin{tabular}{c|cccc}
+  $x_0 = 0$ & 5 &   &  &   \\
+  $x_1 = 1$ & 3 & -2 &  &   \\
+  $x_2 = 3$ & 5 & 1 & 1 &   \\
+  $x_3 = 4$ & 12 & 7 & 2 & 0.25 \\
+\end{tabular}
+
+Therefore, the Newton interpolation polynomial is:
+$$
+\begin{aligned}
+  p_3(f;x) &= 5 - 2(x - 0) + 1(x - 0)(x - 1) + 0.25(x - 0)(x - 1)(x - 3)\\
+  &= 5 - 2x + x(x - 1) + 0.25x(x - 1)(x - 3).
+\end{aligned}
+$$
+  
+
+\subsection*{IV-b.}
+$$
+\begin{aligned}
+  p_3'(f;x) &= -2 + x - 1 + x + 0.25 \left[ (x - 1)(x - 3) + x(x - 3) + x(x - 1) \right]   \\
+  &= 0.75x^2 - 2.25.
+\end{aligned}
+$$
+
+Let $p_3'(f;x) = 0$, we have
+$$
+  x = \sqrt{3} \in (1, 3).
+$$
+
+Thus $p_3'(f;x)$ is decreasing in $(1,\sqrt{3})$ and increasing in $(\sqrt{3},3)$
+
+Therefore, the approximate location of the minimum $x_{\text{min}}$ is $\sqrt{3}$.
+
+\section*{V.}
+\subsection*{V-a.}
+Calculate the table of divided differences:
+\begin{tabular}{c|cccccc}
+  $0$ & 0   &     &    &    &   &   \\
+  $1$ & 1   & 1   &    &    &   &   \\
+  $1$ & 1   & 7   & 6  &    &   &   \\
+  $1$ & 1   & 7   & 21 & 15 &   &   \\
+  $2$ & 128 & 127 & 120& 99 & 42&   \\
+  $2$ & 128 & 448 & 321& 201&102& 30\\
+\end{tabular}
+
+Therefore
+$$
+f[0,1,1,1,2,2] = 30.
+$$
+
+\subsection*{V-b.}
+
+The 5th derivative of f is $f^{(5)}(x) = 2520x^2$.
+
+Let
+$$
+\frac{1}{5!}f^{(5)}(\xi) = f[0, 1, 1, 1, 2, 2] = 30, \ \xi\in(0,2).
+$$
+
+We have  $\xi =\frac{\sqrt{70}}{7}\approx 1.195$.
+
+\section*{VI.}
+\subsection*{VI-a.}
+Calculate the table of divided differences:
+$$
+\begin{tabular}{c|ccccc}
+    $x_0 = 0$ & 1 &   &   &       & \\
+    $x_1 = 1$ & 2 & 1 &   &       & \\
+    $x_2 = 1$ & 2 & -1& -2&       & \\
+    $x_3 = 3$ & 0 & -1& 0 & $\frac{2}{3}$& \\
+    $x_4 = 3$ & 0 & 0 &0.5& 0.25 & $-\frac{5}{36}$ \\
+\end{tabular}
+$$
+
+Therefore, the Hermite interpolation polynomial is
+
+$$
+\begin{aligned}
+    p(x) &= 1 + x -2x(x - 1) + \frac{2}{3}x(x-1)^2 -\frac{5}{36}x(x-1)^2(x-3).    \\
+\end{aligned}
+$$
+
+So
+$$
+f(2) \approx p(2) \approx 0.6111.
+$$
+
+\subsection*{VI-b.}
+
+By Theorem 2.37, we have 
+$$
+\exists \xi_{x} \in (0,3)\ \text{s.t.}\ R_{4}(f;x)=f(x) - p(f; x) = \frac{f^{(5)}(\xi_{x})}{5!} x(x-1)^{2}(x-3)^2.
+$$
+
+Because $f^{(5)}(x)\leq M$ on $[0,3]$, we have
+$$
+\begin{aligned}
+  \lvert R_{4}(f;2)\rvert &= \lvert \frac{f^{(5)}(\xi_{2})}{5!} (2 - 0)(2 - 1)^2(2-3)^2 \rvert \\
+  &\leq \frac{M}{60}.
+\end{aligned}
+$$
+
+Therefore the maximum possible error of the above answer is $\frac{M}{60}$.
+
+\section*{VII.}
+\subsection*{VII-a.}
+Prove by induction.
+
+For $n = 1$, we have
+$$
+  \Delta f(x)=f(x+h)-f(x)
+$$
+which satisfies the formula since 
+$$1!h^{1}f[x_0,x_1]=h\frac{f(x_1)-f(x_0)}{x_1-x_0}=f(x+h)-f(x).$$
+
+Assume the formula holds for $n = k$, i.e.,
+$$
+  \Delta^k f(x)=k!h^{k} f[x_0,x_1,\ldots,x_k].
+$$
+
+We need to show it holds for $n = k + 1$.
+
+By the definition, we have
+$$
+\begin{aligned}
+  \Delta^{k+1} f(x)&=\Delta^k f(x+h)-\Delta^k f(x) \\
+  &=k!h^{k} f[x_1,x_2,\ldots,x_{k+1}]-k!h^{k} f[x_0,x_1,\ldots,x_k]\\
+  &=k!h^{k} (x_{k+1}-x_0)\frac{f[x_1,x_2,\ldots,x_{k+1}]-f[x_0,x_1,\ldots,x_k]}{x_{k+1}-x_0}\\
+  &=(k+1)!h^{k+1}f[x_0,x_1,\ldots,x_k,x_{k+1}].
+\end{aligned}
+$$
+
+Thus, the formula holds for $n = k + 1$. By induction, the formula is true for all $n \in \mathbb{N}^*$.
+
+\subsection*{VII-b.}
+Prove by induction.
+
+For $n = 1$, we have
+$$
+  \nabla f(x)=f(x)-f(x-h),
+$$
+which satisfies the formula since
+$$1!h^{1}f[x_0,x_{-1}]=h\frac{f(x_0)-f(x_{-1})}{x_0-x_{-1}}=f(x)-f(x-h).$$
+
+Assume the formula holds for $n = k$, i.e.,
+$$
+\nabla^{k} f(x)=k!h^{k} f[x_0,x_{-1},\ldots,x_{-k}].
+$$
+
+We need to show it holds for $n = k + 1$.
+
+By the definition of divided differences, we have
+$$
+\begin{aligned}
+  \nabla^{k+1} f(x)&=\nabla^{k} f(x)-\nabla^{k} f(x-h)\\
+  &=k!h^{k} f[x_0,x_{-1},\ldots,x_{-k}] - k!h^{k} f[x_{-1},x_{-2}\ldots,x_{-k-1}]\\
+  &=k!h^{k} (x_0-x_{-k-1})\frac{f[x_0,x_{-1},\ldots,x_{-k}] - f[x_{-1},x_{-2}\ldots,x_{-k-1}]}{x_0-x_{-k-1}}\\
+  &=(k+1)!h^{k+1}f[x_0,x_{-1},\ldots,x_{-k},x_{-k-1}]
+\end{aligned}
+$$
+
+Thus, the formula holds for $n = k + 1$. By induction, the formula is true for all $n \in \mathbb{N}^*$.
+
+\section*{VIII.}
+\subsection*{VIII-a.}
+Prove by induction.
+
+For $n = 0$, we have
+$$
+\frac{\partial}{\partial x_0} f[x_0] = f'(x_0) = f[x_0, x_0]
+$$
+which satisfies the formula.
+
+Assume the formula holds for $n = k$, i.e.,
+$$
+\frac{\partial}{\partial x_0} f[x_0, x_1, \dots, x_k] = f[x_0, x_0, x_1, \dots, x_k].
+$$
+
+We need to show it holds for $n = k + 1$.
+
+By the definition, we have
+$$ 
+\begin{aligned}
+  &\frac{\partial}{\partial x_0} f[x_0, x_1, \dots, x_{k+1}] \\
+  =& \frac{\partial}{\partial x_0} \frac{f[x_1, x_2, \dots, x_{k+1}] - f[x_0, x_1, \dots, x_{k}]}{x_{k+1} - x_0}\\
+  =& \frac{f[x_1, x_2, \dots, x_{k+1}] - f[x_0, x_1, \dots, x_{k}]}{(x_{k+1}-x_0)^2} - \frac{1}{x_{k+1}-x_0} \frac{\partial}{\partial x_0} f[x_0, x_1, \dots, x_{k}].\\
+\end{aligned}
+$$
+
+Using the inductive hypothesis, we have
+$$
+\frac{\partial}{\partial x_0} f[x_0, x_1, \dots, x_k] = f[x_0, x_0, x_1, \dots, x_k].
+$$
+
+Therefore,
+$$
+\begin{aligned}
+  &\frac{\partial}{\partial x_0} f[x_0, x_1, \dots, x_{k+1}]\\
+  =& \frac{1}{x_{k+1}-x_0} \frac{f[x_1, x_2, \dots, x_{k+1}] - f[x_0, x_1, \dots, x_{k}]}{x_{k+1}-x_0} - \frac{1}{x_{k+1}-x_0} f[x_0, x_0, x_1, \dots, x_k]\\
+  =& \frac{1}{x_{k+1}-x_0} (f[x_0, x_1, \dots, x_{k+1}] - f[x_0, x_0, x_1, \dots, x_k])\\
+  =& f[x_0, x_0, x_1, \dots, x_{k+1}].
+\end{aligned}
+$$
+
+Thus, the formula holds for $n = k + 1$. By induction, the formula is true for all $n \in \mathbb{N}$.
+
+
+\subsection*{VIII-b.}
+For the partial derivative with respect to one of other variables, for example, $x_i$, we have
+$$
+  \frac{\partial}{\partial x_i} f[x_0, \dots, x_n] = \frac{\partial}{\partial x_i} f[x_i, x_0, x_1, \dots, x_{i-1}, x_{i+1}, \dots, x_n]
+$$
+
+After simple substitution of subscripts, i.e.
+$$
+  x_{k}=\left\{\begin{aligned}
+  &y_{k+1},\ k=0,1,\ldots,i-1,\\
+  &y_0,\ k=i,\\
+  &y_{k},\ k=i+1,i+2,\ldots,n,
+\end{aligned}\right.
+$$
+and using conclusion from VIII-a
+$$
+  \frac{\partial}{\partial y_0} f[y_0, y_1, y_2, \dots, y_n]=f[y_0, y_0, y_1, y_2, \dots, y_n],
+$$
+we have
+$$
+\begin{aligned}
+  \frac{\partial}{\partial x_i} f[x_0, \dots, x_n] &= \frac{\partial}{\partial y_0} f[y_0, y_1, y_2, \dots, y_n]  \\
+  &=f[y_0, y_0, y_1, y_2, \dots, y_n]\\
+  &=f[x_0, \dots, x_{i-1}, x_i, x_i, x_{i+1}, \dots, x_n].
+\end{aligned}
+$$
+
+Therefore, the conclusion is similar for the partial derivative with respect to $x_i$, i.e.
+$$
+\frac{\partial}{\partial x_i} f[x_0, \dots, x_n] = f[x_0, \dots, x_{i-1}, x_i, x_i, x_{i+1}, \dots, x_n].
+$$
+
+\section*{IX.}
+
+Set
+$$p(x) = a_{0}x^n + a_{1} x^{n-1} + \cdots + a_n$$ 
+and 
+$$\xi = -1 + 2\frac{x - a}{b - a},$$ 
+i.e.
+$$x = a+\frac{b-a}{2}(\xi+1)$$
+where $x\in [a, b]$.
+
+So
+$$
+  \max_{x \in [a,b]} \lvert p(\xi)\rvert = \max_{\xi\in[-1,1]} \left|p\left(a+\frac{b-a}{2}(\xi+1)\right)\right|.
+$$
+
+Set
+$$
+P(\xi) = \frac{2^n}{a_0 ({b-a})^n} p\left(a+\frac{b-a}{2}(\xi+1)\right).
+$$
+It is a polynomial of $\xi$ of degree $n$ with leading coefficient 1.
+
+By Theorem 2.47, we have
+$$
+\min \max_{\xi\in[-1,1]} \lvert P(\xi)\rvert = \max_{\xi\in[-1,1]} \left|\frac{T_n(\xi)}{2^{n-1}}\right| = \frac{1}{2^{n-1}}.
+$$
+
+So
+$$
+\begin{aligned}
+   \min \max_{x \in [a,b]} |p(x)| &=  \frac{\lvert a_0\rvert ({b-a})^n}{2^n} \min\max_{\xi\in[-1,1]} \lvert P(\xi)\rvert\\
+   &= \frac{\lvert a_0\rvert ({b-a})^n}{2^n} \frac{1}{2^{n-1}}  \\
+   &= \frac{\lvert a_0\rvert ({b-a})^n}{2^{2n-1}},
+\end{aligned}
+$$
+i.e.
+
+$$
+\min\max_{x\in[a,b]}\lvert a_0x^n + a_1 x^{n-1} + \cdots + a_n\rvert = \frac{\lvert a_0\rvert ({b-a})^n}{2^{2n-1}}.
+$$
+
+\section*{X.}
+Assume the conclusion doesn't hold, i.e.
+
+$$
+\exists p \in \mathbb{P}^a_{n},\ \mathrm{s.t.} \ \left \| \hat{p}_{n} \right \|_{\infty} > \left \| p \right \|_{\infty}.
+$$
+
+Set $P(x) = \hat{p}_n(x) - p(x)$ and $x_k = \cos \frac{k}{n}\pi\in[-1,1],\ k= 0, 1, \dots, n$, then
+$$
+P(x_k) = (-1)^{k}\left \|\hat{p}_n \right \|_{\infty} - p(x_k),\ k= 0, 1, \dots, n.
+$$
+
+By the above assumption, $P(x)$ has alternating signs at these $n+1$ points. Hence $P(x)$ must have n zeros in $[-1, 1]$.
+Besides, $P(a) = \hat{p}(a) - p(a) = 1 - 1 = 0, (a > 1)$. So $P(x)$ has at least $n+1$ zeros. 
+
+However by the construction of $P(x)$, the degree of $P(x)$ is at most $n$. Therefore, $P(x)\equiv0$ and $\hat{p}(a) = p(a)$.
+This is a contradiction to the assumption.
+
+So, the original statement must be true, i.e.
+$$\forall p\in\mathbb{P}_n^a,\quad\|\hat{p}_n\|_\infty\leq\|p\|_\infty.$$
+
+\section*{XI.}
+By Definition 2.50. about the Bernstein base polynomials, 
+$$
+\forall k = 0, 1, \dots n,\ b_{n, k}(t):=\binom{n}{k}t^k(1-t)^{n-k}.
+$$
+
+The right hand side of the formula can be simplied as 
+$$
+\begin{aligned}
+  &\frac{n-k}{n}b_{n,k}(t)+\frac{k+1}{n}b_{n,k+1}(t) \\
+  =&\frac{n-k}{n} \frac{n!}{k!(n-k)!} t^k(1-t)^{n-k} + \frac{k+1}{n} \frac{n!}{(k+1)!(n-k-1)!} t^{k+1}(1-t)^{n-k-1} \\
+  =&\frac{(n-1)!}{k!(n-k-1)!} t^k(1-t)^{n-k} +\frac{(n-1)!}{k!(n-k-1)!} t^{k+1}(1-t)^{n-k-1} \\
+  =&\binom{n-1}{k} t^k(1-t)^{n-k-1}[(1 - t) + t]   \\
+  =&\binom{n-1}{k} t^k(1-t)^{n-k-1}  \\
+  =&b_{n-1, k}(t).
+\end{aligned}
+$$
+
+So the formula holds true.
+
+\section*{XII.}
+By Definition 2.50. about the Bernstein base polynomials, we have
+$$
+\forall k = 0, 1, \dots n,\ b_{n, k}(t):=\binom{n}{k}t^k(1-t)^{n-k}.
+$$
+
+The left hand side of the formula can be simplied as 
+$$
+\begin{aligned}
+  \int_{0}^{1} b_{n,k}(t) \mathrm{d}t =& \int_{0}^{1} \binom{n}{k}t^k(1-t)^{n-k} \mathrm{d}t \\
+  =& \binom{n}{k} \int_{0}^{1} (1-t)^{n-k} \mathrm{d}\frac{t^{k+1}}{k+1} \\
+  =& \frac{n!}{(k+1)!(n-k)!} \int_{0}^{1} (1-t)^{n-k} \mathrm{d}t^{k+1} \\
+  =& \frac{n!}{(k+1)!(n-k)!} \left[ \left.(1-t)^{n-k}t^{k+1} \right|_{0}^{1} + (n-k)\int_{0}^{1} (1-t)^{n-k-1}t^{k+1} \mathrm{d}t  \right] \\
+  =& \frac{n!}{(k+1)!(n-k-1)!} \int_{0}^{1}(1-t)^{n-k-1}t^{k+1}\mathrm{d}t  \\
+  =& \int_{0}^{1} \binom{n}{k+1}t^{k+1}(1-t)^{n-k-1}\mathrm{d}t. \\
+\end{aligned}
+$$
+
+Similarly, we have
+$$
+  \begin{aligned}
+    \int_{0}^{1} b_{n,k}(t) \mathrm{d}t
+  =&\int_{0}^{1} \binom{n}{k}t^k(1-t)^{n-k} \mathrm{d}t \\
+  =&\int_{0}^{1} \binom{n}{k+1}t^{k+1}(1-t)^{n-k-1}\mathrm{d}t \\
+  =&\int_{0}^{1} \binom{n}{k+2}t^{k+2}(1-t)^{n-k-2}\mathrm{d}t \\
+  =&\dots \\
+  =&\int_{0}^{1} \binom{n}{k+n-k}t^{k+n-k}(1-t)^{n-n+k}\mathrm{d}t \\
+  =&\int_0^1t^n\mathrm{d}t \\
+  =&\frac{1}{n+1}.
+  \end{aligned}
+$$
+
+So the formula holds true.
+
+\end{document}
