@@ -11,7 +11,6 @@
 \usepackage{xcolor}
 \usepackage{float}
 \usepackage{hyperref}
-
 \usepackage{geometry}
 \geometry{margin=1.5cm, vmargin={0pt,1cm}}
 \setlength{\topmargin}{-1cm}
@@ -448,12 +447,12 @@ $$
 Assume the conclusion doesn't hold, i.e.
 
 $$
-\exists p \in \mathbb{P}^a_{n},\ \mathrm{s.t.} \ \left \| \hat{p}_{n} \right \|_{\infty} > \left \| p \right \|_{\infty}.
+\exists p \in \mathbb{P}^a_{n},\ \mathrm{s.t.} \ \lVert \hat{p}_{n} \rVert_{\infty} > \lVert p \rVert_{\infty}.
 $$
 
 Set $P(x) = \hat{p}_n(x) - p(x)$ and $x_k = \cos \frac{k}{n}\pi\in[-1,1],\ k= 0, 1, \dots, n$, then
 $$
-P(x_k) = (-1)^{k}\left \|\hat{p}_n \right \|_{\infty} - p(x_k),\ k= 0, 1, \dots, n.
+P(x_k) = (-1)^{k}\lVert\hat{p}_n \rVert_{\infty} - p(x_k),\ k= 0, 1, \dots, n.
 $$
 
 By the above assumption, $P(x)$ has alternating signs at these $n+1$ points. Hence $P(x)$ must have n zeros in $[-1, 1]$.
