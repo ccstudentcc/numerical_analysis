@@ -1,4 +1,5 @@
 # directory structure
+```
 Chapter2
 │  B.cpp
 │  C.cpp
@@ -29,7 +30,7 @@ Chapter2
         C_plot.m
         E_plot.m
         F_plot.m
-
+```
 # instructions
 Use `make run` to Compile and run `B.cpp`, `C.cpp`, `D.cpp`, `E.cpp` and `F.cpp`. Then the result will be shown in the file `run.txt`.
 

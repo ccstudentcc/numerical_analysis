@@ -30,7 +30,9 @@ doxygen:
 
 clean:
 	rm -f $(EXECUTABLES) $(PDF) *.aux *.log *.out *.synctex.gz *.toc *.bbl *.run.xml *.blg *-blx.bib run.txt
-	rm -f data/data_10.txt data/data_40.txt data/data_160.txt
+	> data/data_10.txt
+	> data/data_40.txt
+	> data/data_160.txt
 	rm -rf html latex  # Clean up Doxygen generated documentation
 
 .PHONY: all run report clean doxygen
