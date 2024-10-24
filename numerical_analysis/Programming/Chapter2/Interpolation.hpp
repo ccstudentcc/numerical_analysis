@@ -257,7 +257,7 @@ public:
                     {
                         std::cout << "*";
                     }
-                    else if (0 < j < i)
+                    else if (0 < j && j< i)
                     {
                         std::cout << "*";
                     }
@@ -469,7 +469,7 @@ public:
                     {
                         std::cout << "*";
                     }
-                    else if (0 < j < i)
+                    else if (0 < j && j< i)
                     {
                         std::cout << "*";
                     }
