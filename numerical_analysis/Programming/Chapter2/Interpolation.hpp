@@ -6,32 +6,145 @@
 #include <stdexcept>
 #include <iostream>
 #include <iomanip>
+#include <numeric> // for std::accumulate
+#include <cmath>
 
-// Abstract base class for interpolation methods
+/**
+ * @brief Represents a point in 2D space.
+ */
+struct Point
+{
+    double x, y;
+
+    /**
+     * @brief Constructor to initialize a Point.
+     *
+     * @param x The x-coordinate of the point.
+     * @param y The y-coordinate of the point.
+     */
+    Point(double x = 0, double y = 0) : x(x), y(y) {}
+
+    // Assignment operator
+    Point &operator=(const Point &other)
+    {
+        if (this != &other)
+        {
+            x = other.x;
+            y = other.y;
+        }
+        return *this;
+    }
+
+    // Addition operator
+    Point operator+(const Point &other) const
+    {
+        return Point(x + other.x, y + other.y);
+    }
+
+    // Subtraction operator
+    Point operator-(const Point &other) const
+    {
+        return Point(x - other.x, y - other.y);
+    }
+
+    // Multiplication operator (element-wise)
+    Point operator*(const Point &other) const
+    {
+        return Point(x * other.x, y * other.y);
+    }
+
+    Point operator*(const double &other) const
+    {
+        return Point(x * other, y * other);
+    }
+
+    // Division operator
+    Point operator/(const Point &other) const
+    {
+        if (other.x == 0 || other.y == 0)
+        {
+            throw std::runtime_error("Division by zero is not allowed.");
+        }
+        return Point(x / other.x, y / other.y);
+    }
+
+    Point operator/(const double &other) const
+    {
+        if (other == 0)
+        {
+            throw std::runtime_error("Division by zero is not allowed.");
+        }
+        return Point(x / other, y / other);
+    }
+
+    // Friend function to print the Point
+    friend std::ostream &operator<<(std::ostream &os, const Point &point)
+    {
+        os << point.x << "," << point.y;
+        return os;
+    }
+};
+
+/**
+ * @brief Calculate the binomial coefficient "n choose i".
+ *
+ * @param n The total number of items.
+ * @param i The number of items to choose.
+ * @return The binomial coefficient.
+ */
+int binomial(int n, int i)
+{
+    int res = 1;
+    for (int j = 1; j <= i; ++j)
+    {
+        res *= (n - j + 1) / (double)j;
+    }
+    return res;
+}
+
+/**
+ * @brief Abstract base class for interpolation methods.
+ */
 class Interpolation
 {
 protected:
-    std::vector<double> x_values; // Store the x-values of interpolation nodes
-    std::vector<double> coeff;
+    std::vector<double> x_values; ///< Store the x-values of interpolation nodes
 
 public:
-    // Constructor to initialize the x-values
+    /**
+     * @brief Constructor to initialize the x-values.
+     *
+     * @param x_vals The x-values of interpolation nodes.
+     */
     Interpolation(const std::vector<double> &x_vals) : x_values(x_vals) {}
 
-    // Pure virtual function to evaluate the interpolation polynomial at a given point x
+    /**
+     * @brief Pure virtual function to evaluate the interpolation polynomial at a given point x.
+     *
+     * @param x The point at which to evaluate the polynomial.
+     * @return The value of the polynomial at x.
+     */
     virtual double evaluate(double x) const = 0;
 
-    // Pure virtual function to print the interpolation polynomial
+    /**
+     * @brief Pure virtual function to print the interpolation polynomial.
+     */
     virtual void print() const = 0;
 };
 
-// Class for Newton Interpolation
+/**
+ * @brief Class for Newton Interpolation.
+ */
 class NewtonInterpolation : public Interpolation
 {
 private:
-    std::vector<double> divided_diff; // Store divided differences
+    std::vector<double> divided_diff; ///< Store divided differences
 
-    // Helper function to compute divided differences
+    /**
+     * @brief Helper function to compute divided differences.
+     *
+     * @param f The function values at the x-values.
+     */
     void compute_divided_differences(const std::vector<double> &f)
     {
         int n = x_values.size();
@@ -54,14 +167,24 @@ private:
     }
 
 public:
-    // Constructor that takes x-values and function values
+    /**
+     * @brief Constructor that takes x-values and function values.
+     *
+     * @param x_vals The x-values of interpolation nodes.
+     * @param f The function values at the x-values.
+     */
     NewtonInterpolation(const std::vector<double> &x_vals, const std::vector<double> &f)
         : Interpolation(x_vals)
     {
         compute_divided_differences(f);
     }
 
-    // Override the evaluate function to compute the Newton interpolation
+    /**
+     * @brief Evaluate the Newton interpolation polynomial at a given point x.
+     *
+     * @param x The point at which to evaluate the polynomial.
+     * @return The value of the polynomial at x.
+     */
     virtual double evaluate(double x) const override
     {
         int n = x_values.size();
@@ -76,7 +199,9 @@ public:
         return result;
     }
 
-    // Override the print function to print the Newton interpolation polynomial
+    /**
+     * @brief Print the Newton interpolation polynomial.
+     */
     virtual void print() const override
     {
         int n = x_values.size();
@@ -84,7 +209,11 @@ public:
         // Print the first term (constant)
         if (divided_diff[0] != 0)
         {
-            std::cout << std::setprecision(4) << divided_diff[0];
+            std::cout << std::setprecision(7) << divided_diff[0];
+        }
+        else if (n == 1)
+        {
+            std::cout << 0 << std::endl;
         }
 
         // Print the remaining terms
@@ -94,18 +223,30 @@ public:
             {
                 if (divided_diff[i] > 0.0)
                 {
-                    std::cout << "+";
+                    if (i == 1 && divided_diff[0] == 0.0)
+                    {
+                    }
+                    else
+                    {
+                        std::cout << "+";
+                    }
                     if (divided_diff[i] != 1.0)
                     {
-                        std::cout << std::setprecision(4) << divided_diff[i];
+                        std::cout << std::setprecision(7) << divided_diff[i];
                     }
                 }
                 else if (divided_diff[i] < 0.0)
                 {
-                    std::cout << "-";
+                    if (i == 1 && divided_diff[0] == 0.0)
+                    {
+                    }
+                    else
+                    {
+                        std::cout << "-";
+                    }
                     if (divided_diff[i] != -1.0)
                     {
-                        std::cout << std::setprecision(4) << -divided_diff[i];
+                        std::cout << std::setprecision(7) << -divided_diff[i];
                     }
                 }
 
@@ -140,35 +281,33 @@ public:
     }
 
     /**
-     * @brief Convert the Hermite polynomial to its standard form and store the coefficients.
+     * @brief Convert the Newton interpolation polynomial to a Polynomial object.
+     *
+     * @return The corresponding Polynomial object.
      */
-    void print_polynomial()
+    Polynomial to_polynomial()
     {
-        // Coefficient vector for the polynomial in normal form
-        std::vector<double> coeff(x_values.size(), 0.0);
+        int n = x_values.size();
 
-        // Start with the first divided difference (constant term)
-        coeff[0] = divided_diff[0];
+        std::vector<double> tem_root({x_values[0]});
+        Polynomial f({divided_diff[0]});
 
-        // Build the polynomial using Horner's method
-        for (int i = 1; i < x_values.size(); ++i) {
-            std::vector<double> temp_coeff(i + 1, 0.0);
-            temp_coeff[0] = coeff[0]; // Start with the existing constant term
+        for (int t = 1; t < n; t++)
+        {
+            Polynomial f_temp({divided_diff[t]});
 
-            // Update temp_coeff by multiplying with (x - x_values[i-1])
-            for (int j = 1; j <= i; ++j) {
-                temp_coeff[j] = temp_coeff[j - 1] * (-x_values[i - 1]) + (j < coeff.size() ? coeff[j] : 0);
+            for (int j = 0; j < t; j++)
+            {
+                Polynomial f_multi({-tem_root[j], 1});
+                f_temp = f_temp * f_multi;
             }
 
-            // Add the divided difference term to the final coefficients
-            for (int j = 0; j <= i; ++j) {
-                coeff[j] += divided_diff[i] * temp_coeff[j];
-            }
+            f = f + f_temp;
+
+            tem_root.push_back(x_values[t]);
         }
 
-        // Create and print the polynomial from coefficients
-        Polynomial polynomial(coeff);
-        polynomial.print();
+        return f;
     }
 };
 
@@ -180,14 +319,18 @@ public:
  */
 class HermiteInterpolation : public Interpolation
 {
-private:
-    std::vector<double> y_values; // Function values at x values. Each f_value is followed by Corresponding derivatives values
-    std::vector<int> m_values;    // Orders of derivatives at each x value
-    std::vector<double> x_real_values;
-    std::vector<std::vector<double>> divided_diff_table; // Divided difference table
-    int total_size;                                      // Total size of divided difference table
+public:
+    std::vector<double> y_values; ///< Function values at x values.
+    std::vector<int> m_values;    ///< Orders of derivatives at each x value.
+    std::vector<double> x_real_values; ///< Real x-values for the divided difference table.
+    std::vector<std::vector<double>> divided_diff_table; ///< Divided difference table.
+    int total_size; ///< Total size of divided difference table.
 
-    // Build the divided difference table
+    friend std::vector<double> vieteExpansion(const std::vector<double> &roots, const double &an);
+
+    /**
+     * @brief Build the divided difference table.
+     */
     void build_divided_difference_table()
     {
         total_size = 0;
@@ -257,7 +400,7 @@ public:
     virtual double evaluate(double x) const override
     {
         int n = x_values.size();
-        double result = divided_diff_table[0][n - 1]; // Start with the highest divided difference
+        double result = divided_diff_table[n - 1][n - 1]; // Start with the highest divided difference
 
         // Apply the Newton interpolation formula
         for (int i = n - 2; i >= 0; --i)
@@ -269,16 +412,20 @@ public:
     }
 
     /**
-     * @brief Print the divided difference table.
+     * @brief Print the Hermite interpolation polynomial.
      */
     virtual void print() const override
     {
-        int n = x_values.size();
+        int n = total_size;
 
         // Print the first term (constant)
         if (divided_diff_table[0][0] != 0)
         {
-            std::cout << std::setprecision(4) << divided_diff_table[0][0];
+            std::cout << std::setprecision(7) << divided_diff_table[0][0];
+        }
+        else if (n == 1)
+        {
+            std::cout << 0 << std::endl;
         }
 
         // Print the remaining terms
@@ -288,18 +435,30 @@ public:
             {
                 if (divided_diff_table[i][i] > 0.0)
                 {
-                    std::cout << "+";
+                    if (i == 1 && divided_diff_table[0][0] == 0.0)
+                    {
+                    }
+                    else
+                    {
+                        std::cout << "+";
+                    }
                     if (divided_diff_table[i][i] != 1.0)
                     {
-                        std::cout << std::setprecision(4) << divided_diff_table[i][i];
+                        std::cout << std::setprecision(7) << divided_diff_table[i][i];
                     }
                 }
                 else if (divided_diff_table[i][i] < 0.0)
                 {
-                    std::cout << "-";
+                    if (i == 1 && divided_diff_table[0][0] == 0.0)
+                    {
+                    }
+                    else
+                    {
+                        std::cout << "-";
+                    }
                     if (divided_diff_table[i][i] != -1.0)
                     {
-                        std::cout << std::setprecision(4) << -divided_diff_table[i][i];
+                        std::cout << std::setprecision(7) << -divided_diff_table[i][i];
                     }
                 }
 
@@ -332,6 +491,113 @@ public:
         }
 
         std::cout << std::endl;
+    }
+
+    /**
+     * @brief Convert the Hermite interpolation polynomial to a Polynomial object.
+     *
+     * @return The corresponding Polynomial object.
+     */
+    Polynomial to_polynomial()
+    {
+        int n = total_size;
+
+        std::vector<double> tem_root({x_real_values[0]});
+        Polynomial f({divided_diff_table[0][0]});
+
+        for (int t = 1; t < n; t++)
+        {
+            Polynomial f_temp({divided_diff_table[t][t]});
+
+            for (int j = 0; j < t; j++)
+            {
+                Polynomial f_multi({-tem_root[j], 1});
+                f_temp = f_temp * f_multi;
+            }
+
+            f = f + f_temp;
+
+            tem_root.push_back(x_real_values[t]);
+        }
+
+        return f;
+    }
+};
+
+/**
+ * @brief Class for Bezier interpolation.
+ */
+class BezierInterpolation
+{
+private:
+    std::vector<Point> points; ///< Control points for the Bezier curve.
+    std::vector<Point> tan_points; ///< Tangent points for each control point.
+    const Function &Fx; ///< Function for x-coordinates.
+    const Function &Fy; ///< Function for y-coordinates.
+    int totalsize; ///< Total number of control points.
+
+public:
+    /**
+     * @brief Constructor to initialize Bezier interpolation with control points and functions.
+     *
+     * @param in_points The input points for the Bezier curve.
+     * @param Fx The function for x-coordinates.
+     * @param Fy The function for y-coordinates.
+     */
+    BezierInterpolation(const std::vector<Point> &in_points, const Function &Fx, const Function &Fy) 
+        : points(in_points), Fx(Fx), Fy(Fy)
+    {
+        totalsize = points.size();
+        tan_points.resize(points.size(), Point(0, 0));
+
+        for (int i = 0; i < totalsize; i++)
+        {
+            tan_points[i].x = Fx.derivative(points[i].x);
+            tan_points[i].y = Fy.derivative(points[i].y);
+        }
+
+        for(int i = 0; i < totalsize; i++)
+        {
+            points[i].x = Fx(points[i].x);
+            points[i].y = Fy(points[i].y);
+        }
+    }
+
+    /**
+     * @brief Generate points on the Bezier curve.
+     *
+     * @param step The step size for interpolation along the curve.
+     * @return A vector of points on the Bezier curve.
+     */
+    std::vector<Point> curve(double step)
+    {
+        std::vector<Point> regular_point;
+        for (int j = 0; j < totalsize - 1; j++)
+        {
+            std::vector<Point> q((size_t)4, Point(0, 0));
+            q[0] = points[j];
+            q[1] = points[j];
+            q[1].x += tan_points[j].x / sqrt(pow(tan_points[j].x, 2) + pow(tan_points[j].y, 2)) * (points[j + 1].x - points[j].x) / 3;
+            q[1].y += tan_points[j].y / sqrt(pow(tan_points[j].x, 2) + pow(tan_points[j].y, 2)) * (points[j + 1].y - points[j].y) / 3;
+            q[2] = points[j + 1];
+            q[2].x -= tan_points[j].x / sqrt(pow(tan_points[j].x, 2) + pow(tan_points[j].y, 2)) * (points[j + 1].x - points[j].x) / 3;
+            q[2].y -= tan_points[j].y / sqrt(pow(tan_points[j].x, 2) + pow(tan_points[j].y, 2)) * (points[j + 1].y - points[j].y) / 3;
+            q[3] = points[j + 1];
+
+            int n = 3;
+            for (double t = 0; t <= 1; t += step)
+            {
+                Point res(0, 0);
+                for (int i = 0; i <= n; ++i)
+                {
+                    double b = binomial(n, i) * pow(t, i) * pow(1 - t, n - i);
+                    res.x += q[i].x * b;
+                    res.y += q[i].y * b;
+                }
+                regular_point.push_back(res);
+            }
+        }
+        return regular_point;
     }
 };
 

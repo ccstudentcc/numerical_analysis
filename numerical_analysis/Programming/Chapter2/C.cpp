@@ -20,6 +20,7 @@ double x_i(int i, int n){
 }
 
 int main() {
+    std::cout << "Problem F" << std::endl;
     std::vector<int> n={5,10,15,20};
     F1 f;
     for (auto n_cur : n) {
@@ -33,7 +34,10 @@ int main() {
 
         NewtonInterpolation func(x,y);
         std::cout << "when n=" << n_cur << ", p(x)=";
-        func.print();
+        // func.print();
+        // std::cout << "Simplify: p(x)=";
+        Polynomial func_poly= func.to_polynomial();
+        func_poly.print();
 
     }
 

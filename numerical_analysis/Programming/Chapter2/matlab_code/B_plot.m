@@ -1,47 +1,48 @@
 % B_plot.m
 
 clear;
-% define f(x)
-f = @(x) 1 ./ (1 + x.^2);
 
-% difine interpolation p(x)
-p2 = @(x) 0.03846 + 0.1923*(x+5) - 0.03846*(x+5).*x;
-p4 = @(x) 0.03846 + 0.03979*(x+5) + 0.06101*(x+5).*(x+2.5) ...
-    - 0.02653*(x+5).*(x+2.5).*x + 0.005305*(x+5).*(x+2.5).*x.*(x-2.5);
-p6 = @(x) 0.03846 + 0.02646*(x+5) + 0.02485*(x+5).*(x+3.333) ...
-    + 0.01494*(x+5).*(x+3.333).*(x+1.667) ...
-    - 0.01317*(x+5).*(x+3.333).*(x+1.667).*x ...
-    + 0.004203*(x+5).*(x+3.333).*(x+1.667).*x.*(x-1.667) ...
-    - 0.0008406*(x+5).*(x+3.333).*(x+1.667).*x.*(x-1.667).*(x-3.333);
-p8 = @(x) 0.03846 + 0.02234*(x+5) + 0.01396*(x+5).*(x+3.75) ...
-    + 0.0117*(x+5).*(x+3.75).*(x+2.5) + 0.0006743*(x+5).*(x+3.75).*(x+2.5).*(x+1.25) ...
-    - 0.004896*(x+5).*(x+3.75).*(x+2.5).*(x+1.25).*x ...
-    + 0.00244*(x+5).*(x+3.75).*(x+2.5).*(x+1.25).*x.*(x-1.25) ...
-    - 0.0006872*(x+5).*(x+3.75).*(x+2.5).*(x+1.25).*x.*(x-1.25).*(x-2.5) ...
-    + 0.0001374*(x+5).*(x+3.75).*(x+2.5).*(x+1.25).*x.*(x-1.25).*(x-2.5).*(x-3.75);
+% Define the symbolic variable
+syms x;
 
-% create x's grid
+% Define f(x) as a symbolic expression
+f = 1 / (1 + x^2);
+
+% Define interpolation polynomials
+p2 = 1 - 0.03846154 * x^2;
+p4 = 1 + 2.775558e-017 * x - 0.1710875 * x^2 + 3.469447e-018 * x^3 + 0.00530504 * x^4;
+p6 = 1 - 5.551115e-017 * x - 0.3513637 * x^2 + 0.0335319 * x^4 - 8.673617e-019 * x^5 - 0.0008406327 * x^6;
+p8 = 1 - 1.387779e-017 * x - 0.5281214 * x^2 - 9.714451e-017 * x^3 + 0.09818753 * x^4 + 8.673617e-018 * x^5 - 0.006580161 * x^6 + 0.0001374446 * x^8;
+
+% Create a range of x values for plotting
 x_vals = linspace(-5, 5, 1000);
 
-% calculate
-f_vals = f(x_vals);
-p2_vals = p2(x_vals);
-p4_vals = p4(x_vals);
-p6_vals = p6(x_vals);
-p8_vals = p8(x_vals);
+% Convert symbolic expressions to function handles for numerical evaluation
+f_func = matlabFunction(f);
+p2_func = matlabFunction(p2);
+p4_func = matlabFunction(p4);
+p6_func = matlabFunction(p6);
+p8_func = matlabFunction(p8);
 
-% plot
+% Calculate values for plotting
+f_vals = f_func(x_vals);
+p2_vals = p2_func(x_vals);
+p4_vals = p4_func(x_vals);
+p6_vals = p6_func(x_vals);
+p8_vals = p8_func(x_vals);
+
+% Plot the results
 figure;
-plot(x_vals, f_vals, 'k', 'LineWidth', 2); % 函数 f(x) 用黑色线绘制
+plot(x_vals, f_vals, 'k', 'LineWidth', 2); % Original function f(x)
 hold on;
-plot(x_vals, p2_vals, '--r', 'LineWidth', 1.5); % n=2 的多项式用红色虚线
-plot(x_vals, p4_vals, '--g', 'LineWidth', 1.5); % n=4 的多项式用绿色虚线
-plot(x_vals, p6_vals, '--b', 'LineWidth', 1.5); % n=6 的多项式用蓝色虚线
-plot(x_vals, p8_vals, '--m', 'LineWidth', 1.5); % n=8 的多项式用紫色虚线
+plot(x_vals, p2_vals, '--r', 'LineWidth', 1.5); % n=2 polynomial
+plot(x_vals, p4_vals, '--g', 'LineWidth', 1.5); % n=4 polynomial
+plot(x_vals, p6_vals, '--b', 'LineWidth', 1.5); % n=6 polynomial
+plot(x_vals, p8_vals, '--m', 'LineWidth', 1.5); % n=8 polynomial
 
+% Add legend and labels
 legend('f(x) = 1 / (1 + x^2)', 'p(x), n=2', 'p(x), n=4', 'p(x), n=6', 'p(x), n=8', 'Location', 'Best');
-
 xlabel('x');
 ylabel('y');
-
 grid on;
+

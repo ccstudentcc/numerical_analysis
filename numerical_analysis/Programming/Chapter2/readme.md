@@ -1,14 +1,34 @@
 # directory structure
-    B.cpp 
-    C.cpp
-    D.cpp
-    E.cpp
-    F.cpp 
-    EquationSolver.hpp
-    Function.hpp
-    Makefile
-    readme.md
-    report.tex
+Chapter2
+│  B.cpp
+│  C.cpp
+│  D.cpp
+│  E.cpp
+│  F.cpp
+│  Function.hpp
+│  Interpolation.hpp // class implemented for interpolation
+│  Makefile
+│  readme.md
+│  report.tex
+│
+├─data // store the coordinates of Bezier curves
+│      data_10.txt
+│      data_160.txt
+│      data_40.txt
+│
+├─images
+│      B_pic.eps
+│      C_pic.eps
+│      E_pic.eps
+│      F_pic_10.eps
+│      F_pic_160.eps
+│      F_pic_40.eps
+│
+└─matlab_code  // scripts for drawing images
+        B_plot.m
+        C_plot.m
+        E_plot.m
+        F_plot.m
 
 # instructions
 Use `make run` to Compile and run `B.cpp`, `C.cpp`, `D.cpp`, `E.cpp` and `F.cpp`. Then the result will be shown in the file `run.txt`.

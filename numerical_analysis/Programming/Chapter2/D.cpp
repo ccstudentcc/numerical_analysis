@@ -1,66 +1,43 @@
 #include "Function.hpp"
-#include "EquationSolver.hpp"
+#include "Interpolation.hpp"
 #include <iostream>
 #include <cmath>
-
-const double Pi = acos(-1.);
-
-class F1 : public Function {
-public:
-    double operator() (double x) const {
-        return sin(x/2) - 1;
-    }
-};
-
-void solve_f1() {
-    std::cout << "Solving \\sin(x/2)-1" << std::endl;
-    Secant_Method solver_f1_1(F1(), 0, Pi/2);
-    double x1 = solver_f1_1.solve();
-    Secant_Method solver_f1_2(F1(), 2*Pi/3, 3*Pi/4);
-    double x2 = solver_f1_2.solve();
-    std::cout << "With initial values 0 and \\pi/2, the root is: " << x1 << "." << std::endl;
-    std::cout << "With initial values 2\\pi/3 and 3\\pi/4, the root is: " << x2 << "." << std::endl;
-}
-
-class F2 : public Function {
-public:
-    double operator() (double x) const {
-        return exp(x) - tan(x);
-    }
-};
-
-void solve_f2() {
-    std::cout << "Solving e^x-\\tan(x)" << std::endl;
-    Secant_Method solver_f2_1(F2(), 1, 1.4);
-    double x1 = solver_f2_1.solve();
-    Secant_Method solver_f2_2(F2(), 1.2, 1.6);
-    double x2 = solver_f2_2.solve();
-    std::cout << "With initial values 1 and 1.4, the root is: " << x1 << "." << std::endl;
-    std::cout << "With initial values 1.2 and 1.6, the root is: " << x2 << "." << std::endl;
-}
-
-class F3 : public Function {
-public:
-    double operator() (double x) const {
-        return pow(x,3) - 12*pow(x,2) + 3*x + 1;
-    }
-};
-
-void solve_f3() {
-    std::cout << "Solving x^3-12x^2+3x+1" << std::endl;
-    Secant_Method solver_f3_1(F3(), 0, -0.5);
-    double x1 = solver_f3_1.solve();
-    Secant_Method solver_f3_2(F3(), 0.2, -0.7);
-    double x2 = solver_f3_2.solve();
-    std::cout << "With initial values 0 and -0.5, the root is: " << x1 << "." << std::endl;
-    std::cout << "With initial values 0.2 and -0.7, the root is: " << x2 << "." << std::endl;
-}
+#include <vector>
 
 int main() {
     std::cout << "Problem D" << std::endl;
-    solve_f1();
-    solve_f2();
-    solve_f3();
+    std::vector<double> x={0.0,3.0,5.0,8.0,13.0};
+    std::vector<double> y={0,75,225,77,383,80,623,74,993,72};
+    std::vector<int> m={1,1,1,1,1};
+
+    HermiteInterpolation func(x,y,m);
+    std::cout << "(a)";
+
+    Polynomial func_poly(func.to_polynomial());
+    
+    Polynomial func_deriv = func_poly.derivative_polynomial();
+    std::cout << "p(x)=";
+    func_poly.print();
+
+    std::cout << "p'(x)=";
+    func_deriv.print();
+
+    std::cout << "Speed at t=10s is p'(10)=" << func_deriv(10) << "feet/s" <<std::endl;
+
+    auto extrema = func_deriv.findExtrema(0.0, 13.0);
+    std::cout << "(b) max speed is " << extrema.second.first << "feet/s at t=" << extrema.second.second << "s. ";
+    
+    std::cout << "it ";
+    if(extrema.second.first > 81){
+        std::cout <<  "exceeds";
+    }
+    else{
+        std::cout << "doesn't exceed";
+    }
+    std::cout << " the speed limit." << std::endl;
+    
+
+
 
     return 0;
 }
