@@ -22,8 +22,8 @@ int main() {
     std::cout << "p'(x)=";
     func_deriv.print();
 
-    std::cout << "Speed at t=10s is p'(10)=" << func_deriv(10) << "feet/s" <<std::endl;
-
+    std::cout << "Speed at t=10s is p'(10)=" << func_deriv(10) << "feet/s. ";
+    std::cout << "Position at t=10s is p(10)=" << func_poly(10) << "feet." <<std::endl;
     auto extrema = func_deriv.findExtrema(0.0, 13.0);
     std::cout << "(b) max speed is " << extrema.second.first << "feet/s at t=" << extrema.second.second << "s. ";
     
