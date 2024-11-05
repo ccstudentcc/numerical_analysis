@@ -86,6 +86,17 @@ struct Point
 };
 
 /**
+ * @brief Calculate the factorial of n.
+ *
+ * @param n The number.
+ * @return The factorial of n.
+ */
+int fact(int n){
+    if(n==0) return 1;
+    return n * fact(n-1);
+}
+
+/**
  * @brief Calculate the binomial coefficient "n choose i".
  *
  * @param n The total number of items.
@@ -351,7 +362,7 @@ public:
             {
                 for (int k = 0; k <= j; ++k)
                 {
-                    divided_diff_table[index[i] + j][k] = y_values[index[i] + k];
+                    divided_diff_table[index[i] + j][k] = y_values[index[i] + k] / fact(j);
                     flag[index[i] + j][k] = true;
                 }
                 x_real_values[index[i] + j] = x_values[i];
