@@ -219,68 +219,29 @@ $$
 $$
 
 \subsubsection*{(i)}
-Set $s_1(x)\in \mathbb{S}_2^1$ and 
-$$
-s_1(x)=
-\left\{
-\begin{aligned}
-  &p_3(x), &x\in [-1,0);\\
-  &p_4(x), &x\in [0,1].
-\end{aligned}
-\right.
-$$
+Set $s_1(x)$.
 
-For $p_3(x)$, we have $p_3(-1)=f(-1)$, $p_3(0)=f(0)$. Set $p'_3(0)=m_3$. Construct the divided table.
+We have $s_1(-1)=f(-1)$, $s_1(0)=f(0)$ and $s_1(1)=f(1)$. Construct the divided table.
 
 \begin{table}[H]
   \centering
   \begin{tabular}{c|ccc}
     -1 & 0 & &  \\
     0 & 1 & 1 &   \\
-    0 & 1 & $m_3$ & $m_3-1$  \\
+    1 & 0 & -1 & -1  \\
   \end{tabular}
 \end{table}
 
-So $p_3(x)=x+1+(m_3-1)(x+1)x$.
-
-For $p_4(x)$, we have $p_4(0)=f(0)$, $p_4(1)=f(1)$ and $p'_4(0)=p'_3(0)=m_3$ from the definition of natural cubic spline. Construct the divided table.
-
-\begin{table}[H]
-  \centering
-  \begin{tabular}{c|ccc}
-    0 & 1 & &  \\
-    0 & 1 & $m_3$ &   \\
-    1 & 0 & -1 & $-m_3-1$  \\
-  \end{tabular}
-\end{table}
-
-So $p_4(x)=1+m_{3}x-(m_3+1)x^2$.
+So $p_3(x)=x+1-(x+1)x=1-x^2$.
 
 Thus 
 $$
-s_1(x)=
-\left\{
-\begin{aligned}
-  &x+1+(m_3-1)(x+1)x, &x\in [-1,0);\\
-  &1+m_{3}x-(m_3+1)x^2, &x\in [0,1].
-\end{aligned}
-\right.
-$$
-
-Then
-$$
-s''_1(x)=
-\left\{
-\begin{aligned}
-  &2(m_3-1), &x\in [-1,0);\\
-  &-2(m_3+1), &x\in [0,1].
-\end{aligned}
-\right.
+s''_1(x)=-2.
 $$
 
 We have 
 $$
-\int_{-1}^{1}[s''_1(x)]^2 \mathrm{d}x=8(m_3^2+1)>6.
+\int_{-1}^{1}[s''_1(x)]^2 \mathrm{d}x=8>6.
 $$
 
 Therefore, the bending energy of $s_1(x)$ is more than $s(x)$.
