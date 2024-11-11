@@ -72,7 +72,7 @@ From theorem 3.14, the set of splines $\mathbb{S}_2^1(x_1,x_2,\ldots,x_n)$ is a 
 However, there are only n nonlinear related conditions. So an additional condition needed to determine $s$ uniquel
 
 \subsection*{II-b.}
-Construct the divided table. Set $K_i=\dfrac{f_{i+1}-f_i}{t_{i+1}-t_i}$.
+Construct the divided table. Set $K_i=\dfrac{f_{i+1}-f_i}{x_{i+1}-x_i}$.
 
 \begin{table}[!htbp]
   \centering
@@ -102,11 +102,12 @@ $$
   \left\{\begin{aligned}
     s_2(0)&=s_1(0)=1+c; \\
     s'_2(0)&=s'_1(0)=3c; \\
-    s''_2(0)&=s''_1(0)=6c; \\
-    s_2(1)&=s(1)=-1.
+    s''_2(0)&=s''_1(0)=6c; 
   \end{aligned}
   \right.
 $$
+
+Set $s_2(1)=s(1)=a$.
 
 Construct the divided table.
 
@@ -117,17 +118,21 @@ Construct the divided table.
     0 & $1+c$ & & & \\
     0 & $1+c$ & $3c$ & &  \\
     0 & $1+c$ & $3c$ & $3c$ & \\
-    1 & -1 &$-2-c$ & $-2-4c$ & $-2-7c$ \\
+    1 & $a$ &$a-1-c$ & $a-1-4c$ & $a-1-7c$ \\
   \end{tabular}
 \end{table}
 
 
-So $$s_2(x)=1+c+3cx+3cx^2-(2+7c)x^3.$$
+So $$s_2(x)=1+c+3cx+3cx^2-(1+7c-a)x^3.$$
 
 From definition 3.5, the natural cubic spline s satisfies 
 $$s''_1(-1)=s''_2(1)=0.$$
 
-Since $s''_2(x)=6c-6(2+7c)x$, we can induce that $c=-\frac{1}{3}$.
+Since $s''_2(x)=6c-6(1+7c-a)x$, we can induce that $a=6c+1$.
+
+So $$s_2(x)=1+c+3cx+3cx^2-cx^3.$$
+
+When $a=-1$, we can induces that $c=-\frac{1}{3}$.
 
 \section*{IV.}
 \subsection*{IV-a.}
