@@ -355,11 +355,11 @@ fl(a_ib_i)=(1+\delta_i)a_i b_i, \quad |\delta|<\epsilon_u.
 \]
 Thus, from theorem 4.41, the total sum can be written as:
 \[
-\text{fl}(a_1b_1 + a_2b_2 + a_3b_3) = [a_1b_1(1+\delta_1) + a_2b_2(1+\delta_2) + a_3b_3(1+\delta_3)](1+\delta_0), \quad |\delta_0|<(1+\epsilon_u)^3-1\approx 3 \epsilon_u,
+\text{fl}(a_1b_1 + a_2b_2 + a_3b_3) = [a_1b_1(1+\delta_1) + a_2b_2(1+\delta_2) + a_3b_3(1+\delta_3)](1+\delta_0), \quad |\delta_0|<(1+\epsilon_u)^2-1\approx 2 \epsilon_u,
 \]
 i.e. 
 $$
-\text{fl}(a_1b_1 + a_2b_2 + a_3b_3)=(a_1b_1 + a_2b_2 + a_3b_3)(1+\delta), \quad |\delta|< 4\epsilon_u.
+\text{fl}(a_1b_1 + a_2b_2 + a_3b_3)=(a_1b_1 + a_2b_2 + a_3b_3)(1+\delta), \quad |\delta|< 3\epsilon_u.
 $$
 
 Now, consider the case where we have multiple products and sums, such as:
@@ -373,12 +373,12 @@ $$
 $$
 and
 $$
-\text{fl}\left( \sum_{i=1}^{n}(1+\delta_i) \prod_{j=1}^{m} a_{i,j} \right)=(1+\delta_0)\sum_{i=1}^{n} (1+\delta_i)\prod_{j=1}^{m} a_{i,j}, \quad |\delta_0|<n\epsilon_u.
+\text{fl}\left( \sum_{i=1}^{n}(1+\delta_i) \prod_{j=1}^{m} a_{i,j} \right)=(1+\delta_0)\sum_{i=1}^{n} (1+\delta_i)\prod_{j=1}^{m} a_{i,j}, \quad |\delta_0|<(n-1)\epsilon_u.
 $$
 
 So 
 $$
-\text{fl}\left( \sum_{i=1}^{n} \prod_{j=1}^{m} a_{i,j} \right)=(1+\delta)\sum_{i=1}^{n} \prod_{j=1}^{m} a_{i,j}, \quad |\delta|<(n+m-1)\epsilon_u.
+\text{fl}\left( \sum_{i=1}^{n} \prod_{j=1}^{m} a_{i,j} \right)=(1+\delta)\sum_{i=1}^{n} \prod_{j=1}^{m} a_{i,j}, \quad |\delta|<(n+m-2)\epsilon_u.
 $$
 
 \section*{Exercise 4.80}
