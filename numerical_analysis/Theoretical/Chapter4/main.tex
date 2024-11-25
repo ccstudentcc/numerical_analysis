@@ -399,14 +399,16 @@ f_A(x)=\frac{(\sin x)(1+\delta_3)}{[1+(\cos x)(1+\delta_1)](1+\delta_2)}(1+\delt
 $$
 where $|\delta| \leq \epsilon_u$ for $i=1,2,3,4$. Neglecting the quadratic terms of $O(\delta ^2_i)$, the above eqation is equivalent to 
 $$
-f_A(x)=\frac{\sin x}{1+\cos x}(1+\delta_3+\delta_4-\delta_2-\delta_1\frac{1+\cos x}{\cos x}),
+f_A(x)=\frac{\sin x}{1+\cos x}(1+\delta_3+\delta_4-\delta_2-\delta_1\frac{\cos x}{1+\cos x}),
 $$
-hence we have $\Phi(x)=3+\frac{1+\cos x}{\cos x}$ and 
+hence we have $\Phi(x)=3+\frac{\cos x}{1+\cos x}$ and 
 $$
-\text{cond}_A(x)\leq \frac{\sin x}{x}(3+\frac{1+\cos x}{\cos x}).
+\text{cond}_A(x)\leq \frac{\sin x}{x}(3+\frac{\cos x}{1+\cos x}).
 $$
 
-Hence, $\text{cond}_A(x)$ may be unbounded as $x\rightarrow \frac{\pi}{2}$. On the other hand, $\text{cond}_A(x)$ is controlled by $\frac{10}{\pi}$ as $x\rightarrow 0$.
+While $\frac{\sin x}{x}$ and $\frac{\cos x}{1+\cos x}$ is decreasing and positive when $x\in(0,\frac{\pi}{2})$, $\frac{\sin x}{x}(3+\frac{\cos x}{1+\cos x})$ is decreasing when $x\in(0,\frac{\pi}{2})$.
+
+So $\text{cond}_A(x)$ is controlled by $\frac{6}{\pi}$ as $x\rightarrow \frac{\pi}{2}$.
 
 
 \end{document}
