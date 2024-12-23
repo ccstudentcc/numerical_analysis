@@ -1,0 +1,391 @@
+\documentclass[a4paper]{article}
+\usepackage[affil-it]{authblk}
+% \usepackage[backend=bibtex,style=numeric]{biblatex}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{ctex}
+\usepackage{epstopdf}
+\usepackage{amsmath}
+\usepackage{amsfonts,amssymb}
+\usepackage{tikz}
+\usetikzlibrary{chains}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{float}
+\usepackage{hyperref}
+
+\usepackage{geometry}
+\geometry{margin=1.5cm, vmargin={0pt,1cm}}
+\setlength{\topmargin}{-1cm}
+\setlength{\paperheight}{29.7cm}
+\setlength{\textheight}{25.3cm}
+
+%\addbibresource{citation.bib}
+
+\begin{document}
+% =================================================
+\title{NA Theoretical Homework \#5}
+
+\author{陈澎 3220103443
+  \thanks{Electronic address: \texttt{cpzju@zju.edu.cn}}}
+\affil{信息与计算科学, 信计2201, Zhejiang University }
+
+
+\date{\today}
+
+\maketitle
+
+% ============================================
+\section*{I.}
+\subsection*{I-a.}
+Because $\rho(x)>0$,$\forall x\in(a,b)$, 
+$$
+\forall v\in \mathcal{C}[a,b], \quad \langle v,v\rangle:=\int_a^b\rho(t)v(t)\overline{v(t)}\mathrm{d}t=\int_{a}^{b}\rho(t)|v(t)|^{2}\mathrm{d}t\geq0.
+$$
+
+If $v=0$, clearly we have $\langle v, v \rangle=0$ accroding to the above equation. 
+If $\langle v, v \rangle=0$, because $\rho(x)>0$,$\forall x\in(a,b)$, we have $\int_{a}^{b}|v(t)|^{2}\mathrm{d}t=0$. Then $v=0$. 
+Thus $\langle v, v \rangle=0$ iff $v=0$.
+
+$\forall u,v,w\in \mathcal{C}[a,b]$, we have
+$$
+\langle u+ v, w \rangle=\int_a^b\rho(t)(u(t)+v(t))\overline{w(t)}\mathrm{d}t=\int_a^b\rho(t)u(t)\overline{w(t)}\mathrm{d}t+\int_a^b\rho(t)v(t)\overline{w(t)}\mathrm{d}t=\langle u, w \rangle+\langle v, w \rangle=0.
+$$
+
+$\forall a\in \mathbb{C},\  \forall v,w\in\mathcal{C}[a,b]$, we have
+$$
+\langle av, w \rangle=\int_a^b\rho(t)a\cdot v(t)\overline{w(t)}\mathrm{d}t=a\int_a^b\rho(t) v(t)\overline{w(t)}\mathrm{d}t=a\langle v, w \rangle.
+$$
+
+$\forall v,w\in\mathcal{C}[a,b]$, we have
+$$
+\langle v, w \rangle=\int_a^b\rho(t) v(t)\overline{w(t)}\mathrm{d}t=\int_a^b\rho(t) \overline{w(t) \overline{v(t)}}\mathrm{d}t=\overline{\langle w,v \rangle}. 
+$$
+
+So the set $\mathcal{C}[a,b]$ of continuous functions over $[a, b]$ is an inner-product space over C with its inner product as
+$$
+\langle u,v\rangle:=\int_a^b\rho(t)u(t)\overline{v(t)}\mathrm{d}t.
+$$
+
+\subsection*{I-b.}
+For $\mathcal{C}[a,b]$ with 
+$$
+\|u\|_2:=\left(\int_a^b\rho(t)|u(t)|^2\mathrm{d}t\right)^{\frac12},
+$$
+
+So $\|u\|_2\geq0$ and $\|u\|_2=0\iff u=0.$
+
+$\forall \alpha \in \mathbb{C}$, 
+$$
+\|\alpha u\|_2=\sqrt{\langle\alpha u,\alpha u\rangle}=\sqrt{|\alpha|^2\langle u,u\rangle}=|\alpha|\|u\|_2.
+$$
+
+$\forall u,v\in \mathcal{C}[a,b]$,
+$$
+\|u+v\|_2^2=\langle u+v,u+v\rangle=\|u\|_2^2+\|v\|_2^2+2\mathrm{Re}(\langle u,v\rangle)\leq(\|u\|_2+\|v\|_2)^2.
+$$
+i.e. $\|u+v\|_2\leq\|u\|_2+\|v\|_2$.
+
+So $\mathcal{C}[a,b]$ with 
+$$
+\|u\|_2:=\left(\int_a^b\rho(t)|u(t)|^2\mathrm{d}t\right)^{\frac12},
+$$
+is a normed vector space over $\mathbb{C}$.
+
+\section*{II.}
+\subsection*{II-a.}
+The Chebyshev polynomialsof the first kind is
+$$
+T_n(x)=cos(n\arccos x),\ n\in \mathbb{N}.
+$$
+
+When $\rho(x)=\frac{1}{\sqrt{1-x^2}}$, set $\theta=\arccos x$, $\theta\in [0,\pi]$.
+$$
+\begin{aligned}
+\langle T_n,T_m\rangle&=\int_{-1}^{1}\frac{cos(n\arccos x) cos(m\arccos x)}{\sqrt{1-x^2}}\mathrm{d}x\\
+&=\int_{0}^{\pi}\frac{cos(n\theta) cos(m\theta)}{\sqrt{1-\cos^2 \theta}}\sin\theta\mathrm{d}\theta\\
+&=\int_{0}^{\pi}cos(n\theta) cos(m\theta)\mathrm{d}\theta\\
+&=\left\{\begin{aligned}
+&0, \ m\neq n;\\
+&\frac{\pi}{2},\ m=n\neq0;\\
+&\pi,\ m=n=0.\\
+\end{aligned}
+\right.
+\end{aligned}
+$$
+
+So they are orthogonal on $[-1, 1]$ with respect to the inner product in Theorem 5.7 with the weight function $\rho(x)=\frac{1}{\sqrt{1-x^2}}$.
+
+\subsection*{II-b.}
+$$
+\begin{aligned}
+    T_0^*&=\frac{T_0}{\|T_0\|}=\frac{1}{\sqrt{\pi}}\\
+    T_1^*&=\frac{T_1}{\|T_1\|}=\frac{2T_1}{\pi}=\sqrt{\frac{2}{\pi}}x\\
+    T_2^*&=\frac{T_2}{\|T_2\|}=\sqrt{\frac{2}{\pi}}T_2=\sqrt{\frac{2}{\pi}}(2x^2-1)\\
+\end{aligned}
+$$
+
+\section*{III.}
+\subsection*{III-a}
+By Fourier expansion, 
+$$
+y(x)=\sum_{k=0}^\infty c_kT_k(x).
+$$
+
+With $\rho(x)=\frac{1}{\sqrt{1-x^2}}$, 
+$$
+c_0=\frac1\pi\int_{-1}^1y(x)T_0(x)\frac1{\sqrt{1-x^2}}\mathrm{d}x
+$$
+and
+$$
+c_k=\frac2\pi\int_{-1}^1y(x)T_k(x)\frac1{\sqrt{1-x^2}}\mathrm{d}x, \ k=1,2,\ldots.
+$$
+
+So $c_0=\frac2\pi$.
+
+$$
+c_1=\frac2\pi\int_{-1}^1x\mathrm{d}x=0.
+$$
+
+$$
+c_2=\frac2\pi\int_{-1}^1T_2(x)\mathrm{d}x=\frac2\pi\int_{-1}^{1}(2x^2-1)\mathrm{d}x=-\frac{4}{3\pi}.
+$$
+
+So a quadratic polynomial to approximate it is
+$$
+p(x)=c_0T_0(x)+c_1T_1(x)+c_2T_2(x)=-\frac{8}{3\pi}x^2+\frac{10}{3\pi}
+$$
+
+\subsection*{III-b}
+Let 
+$$
+\hat{y}(x)=\sum_{k=0}^2 c_kT_k(x)
+$$
+be the best approximatation to $y(x)$. Let $\mathbf{c}=[c_0,c_1,c_2]$, 
+$$\mathbf{a}=[\langle y, T_0\rangle,\langle y, T_1\rangle,\langle y, T_2\rangle].$$
+Then 
+$$
+G(T_0,T_1,T_2)^T \mathbf{c}=\mathbf{a},
+$$
+where $G(T_0,T_1,T_2)=(\langle T_{i-1}, T_{j-1}\rangle)_{ij}\in \mathbb{R}^{3\times 3}$.
+
+After calculation, we have
+$$
+\mathbf{a}=[2,0,-\frac{2}{3}]^T
+$$
+and 
+$$
+G(T_0,T_1,T_2)=\begin{bmatrix}
+    \pi & 0 & 0\\
+    0& \frac{\pi}{2} & 0 \\
+    0 & 0 & \frac{\pi}{2} \\
+\end{bmatrix}.
+$$
+
+So 
+$$
+\mathbf{c}=[\frac{2}{\pi}, 0, -\frac{4}{3\pi}].
+$$
+
+Then
+$$
+\hat{y}(x)=\sum_{k=0}^2 c_kT_k(x)=-\frac{8}{3\pi}x^2+\frac{10}{3\pi}.
+$$
+
+\section*{IV.}
+\subsection*{IV-a.}
+$v_1=1$, $u_1^*=\frac{v_1}{\| v_1\|}=\frac{\sqrt{3}}{6}$.
+
+$v_2=x-\langle x, u_1^*\rangle u_1^*=x-\frac{13}{2}$, $u_2^*=\frac{v_2}{\| v_2\|}=\dfrac{x-\frac{13}{2}}{\sqrt{143}}$.
+
+$v_3=x^2-\langle x^2, u_1^*\rangle u_1^*-\langle x^2, u_2^*\rangle u_2^*=x^2-13x+\frac{91}{3}$,  $u_3^*=\frac{v_3}{\| v_3\|}=\dfrac{x^2-13x+\frac{91}{3}}{\sqrt{\frac{4004}{3}}}$.
+
+So $(u_1^*,u_2^*,u_3^*)$ are the orthonormal polynomials.
+
+\subsection*{IV-b.}
+Let 
+$$
+\hat{\varphi}(x)=\sum_{k=0}^2 a_k u_k^*(x).
+$$
+
+Then 
+$$
+a_0=\langle y, u_0^*\rangle=479.7781,
+$$
+$$
+a_1=\langle y, u_1^*\rangle=49.2547,
+$$
+and
+$$
+a_2=\langle y, u_2^*\rangle=330.3307.
+$$
+
+After simplying, 
+$$
+\hat{\varphi}(x)=9.042x^2 - 113.427x + 386.000,
+$$
+which is the same as that of the example on the table of sales record in the notes.
+
+
+\subsection*{IV-c.}
+The above calculation about constructing the orthonormal polynomials by the Gram-Schmidt process can be reused for any other set of polynomials. The coeffients of the best approximation calculated above cannot be reused for other sets of polynomials.
+
+It implies the computation of the coefficients does not require solving complex normal equations; it only involves performing inner product operations. Once an orthonormal basis is constructed, these basis functions can be reused in different data sets or various polynomial fittings without the need to re-orthogonalize. This reusability enhances efficiency, especially when multiple data sets need to be fitted.
+
+\section*{V.}
+\subsection*{V-a.}
+For Theorem 5.66(PDI-1), we have $\forall\mathbf{y}\in\mathbb{F}^n,$
+$$
+\begin{aligned}
+  AA^+A\mathbf{y}&=A\sum_{j=1}^r\frac{1}{\sigma_j}\left\langle A\mathbf{y},\mathbf{v}_j\right\rangle\mathbf{u}_j\\
+  &=\sum_{j=1}^r\left\langle A\mathbf{y},\mathbf{v}_j\right\rangle\mathbf{v}_j\\
+  &=A\mathbf{y},
+\end{aligned}
+$$
+
+So 
+$$
+(AA^+A-A)\mathbf{y}=\mathbf{0},\ \forall\mathbf{y}\in\mathbb{F}^n.
+$$
+
+Thus $AA^+$ is the projection matrix onto the column space of $A$, i.e.
+$$
+AA^+A=A.
+$$
+
+For Theorem 5.66(PDI-2), we have $\forall\mathbf{x}\in\mathbb{F}^m,$
+$$
+\begin{aligned}
+  A^+A A^+\mathbf{x} &= A^+A\sum_{j=1}^r \frac{1}{\sigma_j} \langle \mathbf{x}, \mathbf{v}_j \rangle \mathbf{u}_j\\
+  &= A^+\sum_{j=1}^r \langle \mathbf{x}, \mathbf{v}_j \rangle \mathbf{v}_j\\
+  &= \sum_{j=1}^r \langle \mathbf{x}, \mathbf{v}_j \rangle A^+\mathbf{v}_j\\
+  &= \sum_{j=1}^r (\langle \mathbf{x}, \mathbf{v}_j \rangle \sum_{i=1}^r \langle \mathbf{v}_j, \mathbf{v}_i \rangle \mathbf{u}_i)\\
+  &=\sum_{j=1}^r \langle \mathbf{x}, \mathbf{v}_j \rangle \mathbf{u}_j\\
+  &= A^+\mathbf{x},
+\end{aligned}
+$$
+
+So 
+$$
+(A^{+}AA^+ - A^{+})\mathbf{x} = \mathbf{0},\ \forall\mathbf{x}\in\mathbb{F}^m.
+$$
+
+Thus, $A^{+}AA^+ = A^{+}$.
+
+For Theorem 5.66(PDI-3), we have 
+$$
+\begin{aligned}
+  A^+A&=A^+V\Sigma U^*\\
+  &=[A^+v_1,\ldots,A^+v_m]\Sigma U^*\\
+  &=[\frac{1}{\sigma_1}u_1, \ldots, \frac{1}{\sigma_r}u_r,0,\ldots,0]\Sigma U^*\\
+  &=[u_1,u_2,\ldots,u_r,0,\ldots,0][u_1,u_2,\ldots,u_n]^*\\
+  &=\sum_{i=1}^{r}u_iu_i^*
+\end{aligned}
+$$
+
+Therefore, $(A^+A)^* = A^+A$.
+
+Using formula 
+$$
+\forall\mathbf{y}\in\mathbb{F}^m,\quad A^+\mathbf{y}=\sum_{j=1}^r\frac{1}{\sigma_j}\left\langle\mathbf{y},\mathbf{v}_j\right\rangle\mathbf{u}_j.
+$$
+we have
+$$
+\left\{\begin{array}{l}
+  A^+v_j=\frac{1}{\sigma_j}u_j,\forall j=1,2\ldots,r,\\
+  A^+v_j=0,\forall j=r+1,\ldots,m,
+  \end{array}\right.
+$$
+
+It can be induced that $r(A^+)=r=r(A)$.
+
+We have $A^+Au_j=u_j$, $\forall i=1,2,\ldots, r,$ so
+$$
+(A^+A)^*u_j=A^*(A^+)^*u_j=u_j,\forall i=1,2,\ldots, r,
+$$
+
+Since $A^*v_j=\sigma_ju_j, \ \forall i=1,2,\ldots, r,$, we have
+$$
+(A^+)^*u_j=\frac{1}{\sigma_j}v_j=(A^*)^+u_j,\forall i=1,2,\ldots, r,
+$$
+
+Since $r((A^+)^*)=r(A)=r((A^*)^+)$, we have
+$$
+(A^+)^*=(A^*)^+.
+$$
+
+So it can be induced that
+$$
+\left\{\begin{array}{l}
+  AA^+v_j=A\frac{1}{\sigma_j}u_j=v_j,\forall j=1,2\ldots, r,\\
+  AA^+v_j=0,\forall j=r+1,\cdots,m,
+\end{array}\right.
+$$
+and
+$$
+\left\{\begin{array}{l}
+  (AA^+)^*v_j=(A^+)^*A^*v_j=(A^+)^*\sigma_ju_j=(A^*)^+\sigma_ju_j=v_j,\forall i=1,2\ldots, r,
+  \\(AA^+)^*v_j=0,\forall j=r+1,\cdots,n.
+\end{array}\right.
+$$
+
+Thus $\forall x\in \mathbb{F}^m$, $[(AA^+)^*-AA^+]\mathbf{x}=0$.
+Therefore, $(AA^+)^* = AA^+$.
+
+
+
+
+
+\subsection*{V-b.}
+For $A=V\Sigma U^*\in \mathbb{F}^{m\times n}$ and $r(A)=r$ we have
+$$
+\begin{aligned}&A=V\Sigma U^*\\
+  &A^*=U\Sigma^*V^*\\
+  &A^*A=U\Sigma^*V^*V\Sigma U^*=U\Sigma^*\Sigma U^*\\
+  &\Sigma^*\Sigma=\begin{bmatrix}
+    \sigma_1^2 & \cdots & 0 & \cdots & 0\\
+    0 & \ddots & 0 & \cdots & 0\\
+    0 & \cdots & \sigma_r^2 & \cdots & 0\\
+    \vdots &  & \vdots &\ddots\\
+    0 & \cdots & 0 & 0 & 0\\
+  \end{bmatrix}\in \mathbb{F}^{n\times n}\\
+  &AA^*=V\Sigma U^*U\Sigma^* V^*=V\Sigma\Sigma^* V^*\\
+  &\Sigma \Sigma^*=\begin{bmatrix}
+    \sigma_1^2 & \cdots & 0 & \cdots & 0\\
+    0 & \ddots & 0 & \cdots & 0\\
+    0 & \cdots & \sigma_r^2 & \cdots & 0\\
+    \vdots &  & \vdots &\ddots\\
+    0 & \cdots & 0 & 0 & 0\\
+  \end{bmatrix}\in \mathbb{F}^{m\times m}\\
+\end{aligned}
+$$
+So If $A$ has linearly independent columns, then $r=n$ and $\Sigma^* \Sigma$ is invertible so $A^*A$ is invertible.
+
+If $A$ has linearly independent rows, then $r=m$ and $\Sigma \Sigma^*$ is invertible so $AA^*$ is invertible.
+
+
+For Lemma 5.67, we have
+$$
+A^*=(AA^+A)^*=A^*(AA^+)^*=A^*AA^+,
+$$
+from (PDI-1) and (PDI-3).
+
+So If $A$ has linearly independent columns, then $A^*A$ is invertible and we have
+$$
+A^+=(A^*A)^{-1}A^*,
+$$
+which is then a left inverse, i.e. $A^+A=I$.
+
+Similarly, we have
+$$
+A^*=(AA^+A)^*=(A^+A)^*A^*=A^+AA^*,
+$$
+from (PDI-1) and (PDI-3).
+
+So If $A$ has linearly independent rows, then $AA^*$ is invertible and we have
+$$
+A^+=A^*(AA^*)^{-1},
+$$
+which is then a right inverse, i.e. $AA^+=I$.
+
+
+\end{document}

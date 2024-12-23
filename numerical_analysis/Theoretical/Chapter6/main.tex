@@ -1,0 +1,395 @@
+\documentclass[a4paper]{article}
+\usepackage[affil-it]{authblk}
+% \usepackage[backend=bibtex,style=numeric]{biblatex}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{ctex}
+\usepackage{epstopdf}
+\usepackage{amsmath}
+\usepackage{amsfonts,amssymb}
+\usepackage{tikz}
+\usetikzlibrary{chains}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{booktabs}
+
+\usepackage{geometry}
+\geometry{margin=1.5cm, vmargin={0pt,1cm}}
+\setlength{\topmargin}{-1cm}
+\setlength{\paperheight}{29.7cm}
+\setlength{\textheight}{25.3cm}
+
+%\addbibresource{citation.bib}
+
+\begin{document}
+% =================================================
+\title{NA Theoretical Homework \#6}
+
+\author{陈澎 3220103443
+  \thanks{Electronic address: \texttt{cpzju@zju.edu.cn}}}
+\affil{信息与计算科学, 信计2201, Zhejiang University }
+
+
+\date{\today}
+
+\maketitle
+
+% ============================================
+\section*{I.}
+\subsection*{I-a.}
+By Definition 6.14, we have
+$$
+\int_a^bf(x)\:dx=I^S(f)+E^S(f),
+$$
+where $I^S(f)=\frac{b-a}6[f(a)+4f(\frac{b+a}2)+f(b)].$
+
+For quadratic polynomial $p_3$, $p_3(-1)=y(-1),\:p_3(0)=y(0),\:p_3^{\prime}(0)\:,p_3(1)=y(1).$
+By constructing the divided difference table, we have
+$$
+\begin{array}{c|c|c|c|c}
+  -1 & y(-1) & & & \\
+  0 & y(0) & y(0) - y(-1) & & \\
+  0 & y(0) & y'(0) & y'(0) - y(0) + y(-1) & \\
+  1 & y(1) & y(1) - y(0) & y(1) - y(0) - y'(0) & \frac{1}{2}\big(y(1) - 2y'(0) - y(-1)\big) \\
+  \end{array}
+$$
+
+Therefore, we have
+$$
+  p_3(x)=y(-1)+(y(0)-y(-1))(x+1)+(y'(0) - y(0) + y(-1))(x+1)x+\frac{1}{2}\big(y(1)-2y'(0)-y(-1)\big)(x+1)x^2.
+$$
+
+So 
+$$
+\begin{aligned}
+  I^S(y)=&\int_{-1}^{1}p_3(t)\:\mathrm{d}x\\
+  &=2y(-1)+2(y(0)-y(-1))+\frac23(y'(0) - y(0) + y(-1))+\frac{1}{3}\big(y(1)-2y'(0)-y(-1)\big)\\
+  &=\frac13(y(-1)+4y(0)+y(1))
+\end{aligned}
+$$
+which is the same as the result of Simpson's rule.
+
+\subsection*{I-b.}
+$$
+\begin{aligned}
+  E^s(y)&=\int_{-1}^1y(t)\:\mathrm{d}t-\int_{-1}^1p_3(t)\:\mathrm{d}t\\
+  &=-\int_{-1}^1\frac{y^{(4)}(\xi(t))}{4!}(t+1)t^2(1-t)\:\mathrm{d}t\\
+  &=-\frac{y^{(4)}(\zeta)}{4!}\int_{-1}^1(t+1)t^2(1-t)\:\mathrm{d}t\\
+  &=-\frac{y^{(4)}(\zeta)}{90},
+\end{aligned}
+$$
+where $\zeta\in(-1,1).$
+
+\subsection*{I-c.}
+Set $x=\frac{b-a}2t+\frac{b+a}2$ for $x\in[a,b]$. Then $t\in[-1,1]$. Set $y(t)=f(x)$ for $t\in[-1,1]$. We have
+$$
+\begin{aligned}
+  \int_a^bf(x)\:\mathrm{d}x&=\int_{-1}^1y(\frac{b-a}2t+\frac{b+a}2)\frac{b-a}2\:\mathrm{d}t\\
+  &=\frac{b-a}2\int_{-1}^1p_3(y;-1,0,0,1;t)\:\mathrm{d}t+E^S\\
+  &=\frac{b-a}2\frac13(y(-1)+4y(0)+y(1))+E^S\\
+  &=\frac{b-a}6[f(a)+4f(\frac{a+b}2)+f(b)]+E^S.
+\end{aligned}
+$$
+
+So $I^S(f)=\frac{b-a}6[f(a)+4f(\frac{a+b}2)+f(b)]$ for $x\in[a,b]$, $\rho(x)\equiv1$ and $f\in\mathcal{C}^4[a,b]$ using Simpson's rule.
+
+We also have 
+$$
+I^S(f)=\frac{b-a}2\int_{-1}^1p_3(y;-1,0,0,1;t)\:\mathrm{d}t=\int_a^bp_3(f;a,\frac{a+b}2,\frac{a+b}2,b;x)\:\mathrm{d}x
+$$
+
+Thus,
+$$
+\begin{aligned}
+  E^{S}&=\int_a^b[y(x)-p_3(f;a,\frac{a+b}2,\frac{a+b}2,b;x)]dx\\
+  &=-\int_a^b\frac{f^{(4)}(\xi(x))}{4!}(x-a)(x-\frac{a+b}2)^2(b-x)dx\\
+  &=-\frac{(b-a)^5}{2880}f^{(4)}(\zeta),
+\end{aligned}
+$$
+where $\zeta\in(a,b)$.
+
+For composite Simpson's rule, we have
+$$
+\begin{aligned}
+  I_{n}^{S}(f)&=\frac{h}{3}\big[f(x_{0})+4f(x_{1})+2f(x_{2})+4f(x_{3})+2f(x_{4})+\cdots+4f(x_{n-1})+f(x_{n})\big]\\
+  &=\frac{h}{3}\sum_{i=1}^{\frac{n}{2}}[f(x_{2i-2})+4f(x_{2i-1})+f(x_{2i})]
+\end{aligned}
+$$
+where $h=\frac{b-a}{n}$ and $x_{i}=a+ih$ for $i=0,1,\ldots,n$.
+
+Applying the Simpson's rule to the subintervals, summing up the
+errors, and we have
+$$
+\begin{aligned}
+  E_n^S(f)&=-\sum_{k=1}^{\frac{n}{2}}\frac{(2h)^5}{2880}f^{(4)}(\xi_k)\\
+  &=-\frac{b-a}{180}h^4\cdot\dfrac{\sum\limits_{k=1}^{\frac{n}{2}}f^{(4)}(\xi_k)}{\frac{n}{2}}\\
+  &=-\frac{b-a}{180}h^4f^{(4)}(\xi),
+\end{aligned}
+$$
+
+\section*{II.}
+\subsection*{II-a.}
+Set $h=\frac{1}{n}$ and $x_k=kh$ for $k=0,1,\ldots,n$, by the composite trapezoidal rule, we have 
+$$
+\exists \xi\in(0,1)\ \text{s.t. } E_n^T(f)=-\frac{1}{12}h^2f^{\prime\prime}(\xi),
+$$
+where $f(x)=e^{-x^2}.$
+
+Let $\lvert E_n^T(f) \rvert<0.5\times10^{-6}$. Since $f^{\prime\prime}(x)=2e^{-x^2}(2x^2-1)$ and $f^{(3)}(x)=4x(3-2x^2)e^{-x^2}$ we have
+$$
+f^{\prime\prime}(x)_{\max}=f^{\prime\prime}(\sqrt{\frac{3}{2}})=4e^{-1.5}\approx 0.896
+$$
+and 
+$$
+f^{\prime\prime}(x)_{\min}=f^{\prime\prime}(0)=-2,
+$$
+for $x\in[0,1]$.
+
+So $\lvert f^{\prime\prime}(x)\rvert < 2$ for $x\in(0,1).$
+
+Thus, we have
+$$
+0.5\times10^{-6}>\lvert-\frac{1}{12}h^2f^{\prime\prime}(\xi)\rvert> \frac{1}{6n^2}.
+$$
+
+So $n>\sqrt{\frac{1}{3\times10^{-6}}}\approx 577.35$
+
+Therefore, we need $n\geq 578$ to ensure the error is less than $0.5\times10^{-6}$.
+
+\subsection*{II-b.}
+Set $h=\frac{1}{n}$ and $x_k=kh$ for $k=0,1,\ldots,n$, by the composite Simpson's rule, we have 
+$$
+\exists \xi\in(0,1)\ \text{s.t. } E_n^S(f)=-\frac{1}{180}h^4f^{(4)}(\xi),
+$$
+where $f(x)=e^{-x^2}.$
+
+Let $\lvert E_n^S(f) \rvert<0.5\times10^{-6}$. Since $f^{(4)}(x)=4e^{-x^2}(4x^4-12x^2+3)$ and $f^{(5)}(x)=-16x(4x^4-16x^2+9)e^{-x^2}$ we have
+$$
+f^{(4)}(x)_{\min}=f^{(4)}(\sqrt{\frac{4-\sqrt{7}}{2}})=8(1-\sqrt{7})e^{-\frac{4-\sqrt{7}}{2}}\approx -6.72
+$$
+and 
+$$
+f^{(4)}(x)_{\max}=\max\{f^{(4)}(0),f^{(4)}(1)\}=12,
+$$
+for $x\in[0,1]$.
+
+So $\lvert f^{(4)}(x)\rvert < 12$ for $x\in(0,1).$
+
+Thus, we have
+$$
+0.5\times10^{-6}>\lvert-\frac{1}{180}h^4f^{(4)}(\xi)\rvert> \frac{1}{15n^4}.
+$$
+
+So $n>\sqrt[4]{\frac{2}{15\times10^{-6}}}\approx 19.1$
+
+Therefore, we need $n\geq 20$ to ensure the error is less than $0.5\times10^{-6}$.
+
+\section*{III.}
+\subsection*{III-a.}
+For $\rho(t)=e^{-t}$, we have
+$$
+\forall p\in\mathbb{P}_1,\quad\int_0^{+\infty}p(t)\pi_2(t)\rho(t)\mathrm{d}t=0,
+$$
+which is equivalent to $\langle 1,\pi_2(t)\rangle=0 $ and $\langle t,\pi_2(t)\rangle=0.$ because $\mathbb{P}_1=\text{span}\{1,x\}$.
+These two conditions yield
+$$
+\begin{aligned}
+  \int_0^{+\infty}(t^2+at+b)e^{-t}\mathrm{d}t&=0,\\
+  \int_0^{+\infty}t(t^2+at+b)e^{-t}\mathrm{d}t&=0.
+\end{aligned}
+$$
+
+Since $\int_0^{+\infty}t^me^{-t}\mathrm{d}t=m!$ for $m\in\mathbb{N}$, we can solve the equations and get $a=-4$ and $b=2$.
+
+So
+$$
+\pi_2(t)=t^2-4t+2.
+$$
+
+\subsection*{III-b.}
+Let $\pi_2(t)=0$, we have $t_{1}=2+\sqrt{2}$ and $t_{2}=2-\sqrt{2}.$
+
+Using Corollary 6.26, we have
+$$
+\begin{aligned}
+  w_{1}+w_{2}=\int_{0}^{+\infty}e^{-t}dt=1,\\
+  w_{1}t_{1}+w_{2}t_{2}=\int_{0}^{+\infty}te^{-t}dt=1,
+\end{aligned}
+$$
+which yields $w_{1}=\frac{2-\sqrt{2}}{4}$ and $w_{2}=\frac{2+\sqrt{2}}{4}.$
+
+Hence the desired two-point Gauss quadrature formula is
+$$
+I^G_2(f)=\frac{2-\sqrt{2}}{4}f(2+\sqrt{2})+\frac{2+\sqrt{2}}{4}f(2-\sqrt{2}).
+$$
+
+By Theorem 6.33, we have
+$$
+\exists \tau \in(0,+\infty)\ \text{s.t.}\ E^G_2(f)=\frac{f^{(4)}(\tau)}{4!}\int_{0}^{+\infty}e^{-t}(t^2-4t+2)^2\mathrm{d}t=\frac{f^{(4)}(\tau)}{6}.
+$$
+
+\subsection*{III-c.}
+Set $f(x)=\frac{1}{1+x}$. Since $f^{(4)}(x)=24(1+x)^{-5}$, we have
+$$
+f^{(4)}(x)_{\max}=f^{(4)}(0)=24
+$$
+for $\geq0$.
+
+So $\lvert f^{(4)}(\tau)\rvert < 24$ for $x\in(0,1).$
+
+Thus, we have
+$$
+\exists \tau \in(0,+\infty)\ \text{s.t.}\ E^G_2(f)=\frac{f^{(4)}(\tau)}{6} < 4.
+$$
+
+Using exact value $I=0.596347361\cdots$, we can calculate the true error
+$$
+E(f)=I-I^G_2(f)=0.596347361-(\frac{2-\sqrt{2}}{4}f(2+\sqrt{2})+\frac{2+\sqrt{2}}{4}f(2-\sqrt{2}))\approx0.024918790.
+$$
+
+Let $E(f)=\frac{f^{(4)}(\tau)}{6}$. We have
+$$
+\tau\approx1.7612556.
+$$
+
+\section*{IV}
+\subsection*{IV-a.}
+Using properties of Lagrange interpolation formula, we have
+$$
+\begin{aligned}
+  h_m(x_j)&=\begin{cases}
+    a_m+b_m x_m &  j=m,\\
+    0 & j\neq m,
+  \end{cases}\\
+  q_m(x_j)&=\begin{cases}
+    c_m+d_m x_m &  j=m,\\
+    0 &  j\neq m,
+  \end{cases}
+\end{aligned}
+$$
+
+Since $h_m^{\prime}(t)=b_m \ell_m^2(t)+2(a_m +b_mt)\ell_m(t)\ell_m^{\prime}(t)$, similarly we have
+$$
+\begin{aligned}
+  h_m^{\prime}(x_j)&=\begin{cases}
+    b_m + 2(a_m+b_m x_m)\ell_m^{\prime}(x_m) &  j=m,\\
+    0 &  j\neq m,
+  \end{cases}\\
+  q_m^{\prime}(x_j)&=\begin{cases}
+    d_m + 2(c_m+d_m x_m)\ell_m^{\prime}(x_m) &  j=m,\\
+    0 &  j\neq m,
+  \end{cases}
+\end{aligned}
+$$
+
+Therefore, we have
+$$
+\begin{aligned}
+  f_m&=p(x_m)=h_m(x_m)f_m+q_m(x_m)f^{\prime}_m\\
+  &=f_m(a_m+b_m x_m)+f^{\prime}_m(c_m+d_m x_m),\\
+  f_m^{\prime}&=p^{\prime}(x_m)=h_m^{\prime}(x_m)f_m+q_m^{\prime}(x_m)f^{\prime}_m\\
+  &=f_m[b_m + 2(a_m+b_m x_m)\ell_m^{\prime}(x_m)]+f^{\prime}_m[d_m + 2(c_m+d_m x_m)\ell_m^{\prime}(x_m)].
+\end{aligned}
+$$
+
+To solve out $a_m,b_m,c_m,d_m$, we need to add more conditons.
+
+To simplify the calculation, let
+$$
+\begin{aligned}
+  \begin{cases}
+  a_m+b_m x_m=1,\\
+  c_m+d_m x_m=0,\\
+  b_m + 2(a_m+b_m x_m)\ell_m^{\prime}(x_m)=0,\\
+  d_m + 2(c_m+d_m x_m)\ell_m^{\prime}(x_m)=1.
+  \end{cases}
+\end{aligned}
+$$
+
+Then we have
+$$
+\begin{aligned}
+  \left\{\begin{array}{l}
+    a_m=1+2x_m \ell_m^{\prime}(x_m),\\
+    b_m=-2\ell_m^{\prime}(x_m),\\
+    c_m=-x_m,\\
+    d_m=1,
+  \end{array}\right.
+\end{aligned}
+$$
+which gives the desired result.
+
+\subsection*{IV-b.}
+$$
+\begin{aligned}
+  I_{n}(f)&=\int_{a}^{b}(\sum_{m=1}^{n}h_{m}(t)f(x_{m})+q_{m}(t)f^{\prime}(x_{m}))\rho(t)\mathrm{d}t\\
+  &=\sum_{m=1}^{n}\int_{a}^{b}(h_{m}(t)f(x_{m})+q_{m}(t)f^{\prime}(x_{m}))\rho(t)\mathrm{d}t\\
+  &=\sum_{m=1}^{n}(f(x_{m})\int_{a}^{b}h_{m}(t)\rho(x)\mathrm{d}t +f^{\prime}(x_{m})\int_{a}^{b}q_{m}(t)\rho(x)\mathrm{d}t )\\
+  &=\sum_{m=1}^{n}(\omega_{m}f(x_{m})+\mu_{m}f^{\prime}(x_{m})).
+\end{aligned}
+$$
+
+So 
+$$
+\begin{aligned}
+  \omega_m&=\int_{a}^{b}h_{m}(t)\rho(x)\mathrm{d}t\\
+  &=\int_{a}^{b}(1+2x_m\ell_m^{\prime}(x_m)-2\ell_m^{\prime}(x_m)t)\ell_m^2(t)\rho(x)\mathrm{d}t,\\
+  \mu_m&=\int_{a}^{b}q_{m}(t)\rho(x)\mathrm{d}t\\
+  &=\int_{a}^{b}(t-x_m)\ell_m^2(t)\rho(x)\mathrm{d}t.
+\end{aligned}
+$$
+
+\subsection*{IV-c.}
+Let $\mu_k=0$ for each $k=0,1,\ldots,n$.
+
+Since 
+$$
+\mu_k=\int_{a}^{b}(t-x_k)\ell_k^2(t)\rho(x)\mathrm{d}t,
+$$
+we have
+$$
+\int_{a}^{b}(t-x_k)\ell_k^2(t)\rho(x)\mathrm{d}t=0.
+$$
+
+Set $v_n(x)=\prod_{k=1}^n(x-x_k)$, we have
+$$
+\int_{a}^{b}v_k(t)\ell_k(t)\rho(x)\mathrm{d}t=0.
+$$
+
+To interpolate given values $f_1,f_2,\ldots,f_n$ at distinct points $x_1,x_2,\ldots,x_n$, the Lagrange formula gives 
+$$
+p_{n-1}(x)=\sum_{k=1}^n f(x_k)\ell_k(x).
+$$
+
+If there exists $\lambda_1,\lambda_2,\ldots,\lambda_n$ such that 
+$$
+0=\sum_{i=1}^{n}\lambda_i \ell_i(x).
+$$
+
+According to the Lagrange formula, we have
+$$
+f_i=\lambda_i.
+$$
+
+Since $p_{n-1}\equiv0$, we have
+$$
+0=f_1=f_2=\cdots=f_n,
+$$
+i.e. 
+$$
+\lambda_1=\lambda_2=\cdots=\lambda_n=0.
+$$
+
+So $\ell_1,\ell_2,\ldots,\ell_n$ is linearly independent.
+
+That is to say $\mathbb{P}_{n-1}=\text{span}\{\ell_1,\ell_2,\ldots,\ell_n\}$.
+
+Thus we have
+$$
+\forall p\in\mathbb{P}_{n-1},\quad\int_{a}^{b}v_n(t) p(t)\rho(t)\mathrm{d}t=0.
+$$
+
+
+
+\end{document}

@@ -1,4 +1,5 @@
 # directory structure
+```
     B.cpp 
     C.cpp
     D.cpp
@@ -9,6 +10,7 @@
     Makefile
     readme.md
     report.tex
+```
 
 # instructions
 Use `make run` to Compile and run `B.cpp`, `C.cpp`, `D.cpp`, `E.cpp` and `F.cpp`. Then the result will be shown in the file `run.txt`.
